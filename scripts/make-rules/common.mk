@@ -7,6 +7,13 @@ SHELL := /bin/bash
 # include the common make file
 COMMON_SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+# The root of the build/dist directory
+#ifeq ($(origin PIGPIG_ROOT), undefined)
+#PIGPIG_ROOT=$(abspath $(shell cd $(COMMON_SELF_DIR)/../.. && pwd -P))
+#$(shell bash ${PIGPIG_ROOT}/scripts/install/common.sh)
+#endif
+
+
 ifeq ($(origin ROOT_DIR),undefined)
 ROOT_DIR := $(abspath $(shell cd $(COMMON_SELF_DIR)/../.. && pwd -P))
 endif

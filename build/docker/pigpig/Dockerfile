@@ -9,9 +9,10 @@ WORKDIR /opt/pigpig
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
       echo "Asia/Shanghai" > /etc/timezone && \
-      mkdir -p /var/log/pigpig
+      mkdir -p /var/log/pigpig && \
+      makir -p /etc/cert
 
-COPY pigpig /opt/pigpig/bin/
+COPY pigpig /usr/local/bin/
 
-ENTRYPOINT ["/opt/pigpig/bin/pigpig"]
+ENTRYPOINT ["pigpig"]
 CMD ["-c", "/etc/pigpig/pigpig.yaml"]

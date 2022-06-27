@@ -17,7 +17,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/notone/pigpig/internal/pigpig/discover"
 	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/internal/version"
 	"github.com/notone/pigpig/pkg/core"
 	"github.com/notone/pigpig/pkg/storage"
 	"github.com/notone/pigpig/pkg/util/infoutil"
@@ -25,6 +24,9 @@ import (
 
 	"github.com/notone/pigpig/internal/pkg/middleware"
 	"github.com/notone/pigpig/pkg/log"
+
+
+	"github.com/marmotedu/component-base/pkg/version"
 )
 
 const RedisKeyPrefix = "pigpig-service-discover-"

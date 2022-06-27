@@ -103,7 +103,7 @@ func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
 				p.GoHandle(w, r)
 				return
 			}
-			log.Debugf("method: CONNECT host: %s moved to %s", r.Host, targetHost)
+			log.Debugf("Moved to %s method: CONNECT host: %s ", r.Host, targetHost)
 			p.ConnectHandler(w, r, targetHost)
 			return
 		} else {
@@ -120,7 +120,7 @@ func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
 				core.WriteResponse(w, r, reverseErr, nil)
 				return
 			}
-			log.Debugf("method: %s host: %s moved to %s", r.Method, r.Host, targetHost)
+			log.Debugf("Moved to %s method: %s host: %s ", r.Method, r.Host, targetHost)
 
 			reverseFunc(w, r)
 			return
