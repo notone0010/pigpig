@@ -76,6 +76,7 @@ require (
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20180830205328-81db2a75821e // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/llorllale/go-gitlint v0.0.0-20210608233938-d6303cc52cc5 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/marmotedu/api v1.6.3 // indirect
 	github.com/marmotedu/go-gitlint v0.0.0-20200928173219-dbbc4b98928c // indirect
