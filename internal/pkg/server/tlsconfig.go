@@ -135,7 +135,7 @@ func LoadCertificate(host, certPath, privkeyPath string) (*tls.Certificate, erro
 	// the transaction is idempotent, however, so it shouldn't matter
 	exist, _ := fileutil.FileExists(certPath)
 	if !exist {
-		log.Errorf("failed to load certificate or key file")
+		log.Warn("failed to load certificate or key file")
 		return nil, errors.New("failed to load certificate or key file")
 	}
 	exist, _ = fileutil.FileExists(privkeyPath)

@@ -12,7 +12,7 @@ all: tidy gen add-copyright format lint cover build
 # Build options
 
 ROOT_PACKAGE=github.com/notone/pigpig
-VERSION_PACKAGE=github.com/notone/pigpig/internal/version
+VERSION_PACKAGE=github.com/marmotedu/component-base/pkg/version
 
 # ==============================================================================
 # Includes

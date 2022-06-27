@@ -53,7 +53,7 @@ mysql:
 
 # Redis 配置
 redis:
-  host: "192.168.1.100" # redis 地址，默认 127.0.0.1:6379
+  host: "redis" # redis 地址，默认 127.0.0.1:6379
   port: 6379 # redis 端口，默认 6379
   password: "" # redis 密码
   #addrs:
@@ -69,7 +69,7 @@ redis:
 
 # etcd 配置
 etcd:
-  endpoints: "192.168.1.100:5566"
+  endpoints: "etcd:2379"
   lease-expire: 10
   timeout: 10
   request-timeout: 2
