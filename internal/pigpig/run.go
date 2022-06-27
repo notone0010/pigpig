@@ -13,5 +13,6 @@ func Run(cfg *config.Config) error {
 		return err
 	}
 
+
 	return server.PrepareRun().Run()
 }
