@@ -11,11 +11,9 @@ import (
 	"strings"
 
 	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/pkg/log"
 )
 
 func (p *ProxyController) SendFinalResponse(c *dudu.Context) error {
-
 	resHeader := c.ResponseDetail.Header
 	resBody := c.ResponseDetail.Body
 
@@ -52,9 +50,9 @@ func (p *ProxyController) SendFinalResponse(c *dudu.Context) error {
 	// 限速或限流可以在这里操作
 
 	c.Writer.WriteHeader(c.ResponseDetail.StatusCode)
-	code, err := c.Writer.Write(c.ResponseDetail.Body)
+	_, err := c.Writer.Write(resBody)
 	if err != nil {
-		log.Errorf("be seem had a error when send final response ----> code: %d", code)
+		// log.Errorf("be seem had a error when send final response ----> code: %d", code)
 		return err
 	}
 	return nil

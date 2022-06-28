@@ -12,8 +12,6 @@ import (
 	"net/url"
 	"sync"
 	"time"
-
-	"github.com/notone/pigpig/pkg/util/infoutil"
 )
 
 // abortIndex represents a typical value used in abort functions.
@@ -29,10 +27,6 @@ type Context struct {
 	RequestDetail *RequestDetail
 
 	ResponseDetail *ResponseDetail
-
-	RequestURL *url.URL
-
-	DistributedNode *infoutil.DistributedId
 
 	// Handlers HandlersChain
 	Handlers HandlersChain
@@ -190,10 +184,18 @@ func (c *Context) NewPrepareRequest() {
 	c.RequestDetail = detail
 }
 
-func (c *Context) GetContextObj(w http.ResponseWriter, r *http.Request) {
+func (c *Context) GetContextObj(w http.ResponseWriter, r *http.Request, engine *ProxyHttpMux) {
 	c.writermem.reset(w)
+	c.Writer = &c.writermem
 	c.Request = r
+	c.engine = engine
+	c.RequestDetail = nil
+	c.ResponseDetail = nil
 	c.index = -1
+	c.Handlers = nil
+	c.fullPath = ""
+	c.Keys = nil
+	c.Errors = c.Errors[:0]
 	c.InitContext()
 }
 
@@ -385,6 +387,10 @@ func (c *Context) requestHeader(key string) string {
 // for this request are not called.
 func (c *Context) Abort() {
 	c.index = abortIndex
+}
+
+func (c *Context) IsAborted() bool {
+	return c.index >= abortIndex
 }
 
 // Next should be used only inside middleware.

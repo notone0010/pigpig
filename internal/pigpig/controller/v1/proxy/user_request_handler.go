@@ -6,6 +6,8 @@
 package proxy
 
 import (
+	"fmt"
+
 	"github.com/marmotedu/errors"
 	"github.com/notone/pigpig/internal/pigpig/dudu"
 	"github.com/notone/pigpig/internal/pkg/code"
@@ -15,7 +17,6 @@ import (
 
 // UserRequestHandler deal with any http requests
 func (p *ProxyController) UserRequestHandler(c *dudu.Context) {
-	p.Plugins = append(p.Plugins, p.srv.Proxy().FetchRemoteResponse)
 	c.Handlers = p.Plugins
 	c.Next()
 
@@ -29,7 +30,9 @@ func (p *ProxyController) UserRequestHandler(c *dudu.Context) {
 		core.WriteResponse(c.Writer, c.Request, aggError, nil)
 		return
 	}
-
+	if c.ResponseDetail == nil {
+		fmt.Println(c.Handlers)
+	}
 	err := p.SendFinalResponse(c)
 	if err != nil {
 		log.Errorf("be seem had a error when send final response ----> %s", err.Error())

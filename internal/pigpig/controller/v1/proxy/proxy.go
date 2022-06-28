@@ -14,9 +14,9 @@ import (
 
 	"github.com/marmotedu/errors"
 	"github.com/notone/pigpig/internal/pigpig/discover"
+	"github.com/notone/pigpig/internal/pigpig/dudu"
 	srvv1 "github.com/notone/pigpig/internal/pigpig/service/v1"
 	"github.com/notone/pigpig/internal/pigpig/transport"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
 	"github.com/notone/pigpig/internal/pkg/loadbalance"
 	"github.com/notone/pigpig/internal/pkg/loadbalance/LB"
 	"github.com/notone/pigpig/pkg/core"
@@ -36,16 +36,18 @@ type ProxyController struct {
 	// LocalNetIFAddr is the network interface address the current local machine
 	LocalNetIFAddr string
 
-
 	Plugins dudu.HandlersChain
 
 	handleErrorFunc dudu.HandlerErrorFunc
 
-	// connPool connect pool
-	connPool sync.Pool
-
 	// userPool
 	userPool sync.Pool
+
+	counter int
+
+	mu sync.Mutex
+
+	once sync.Once
 }
 
 // NewUserController creates a user handler.
@@ -66,6 +68,8 @@ func NewUserController(engine *dudu.ProxyHttpMux,
 
 // ChooseHandler select handler by http method
 func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
+
+	p.handlerComplete()
 	if r.Header.Get(dudu.InternalHeaderFullPath) == "" {
 		r.Header.Add(dudu.InternalHeaderFullPath, r.RequestURI)
 	}
@@ -141,8 +145,8 @@ func (p *ProxyController) GoHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	c := p.userPool.Get().(*dudu.Context)
-	c.GetContextObj(w, r)
-	log.Infof("client: %s received %s request to %s %s", r.RemoteAddr, r.Method, r.Host, r.URL.Path)
+	c.GetContextObj(w, r, p.engine)
+	// log.Infof("client: %s received %s request to %s %s", r.RemoteAddr, r.Method, r.Host, r.URL.Path)
 	p.UserRequestHandler(c)
 
 	p.userPool.Put(c)
@@ -150,4 +154,10 @@ func (p *ProxyController) GoHandle(w http.ResponseWriter, r *http.Request) {
 
 func (p *ProxyController) Use(plugins ...dudu.HandlerFunc) {
 	p.Plugins = append(p.Plugins, plugins...)
+}
+
+func (p *ProxyController) handlerComplete() {
+	p.once.Do(func() {
+		p.Plugins = append(p.Plugins, p.srv.Proxy().FetchRemoteResponse)
+	})
 }

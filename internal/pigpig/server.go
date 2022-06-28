@@ -50,40 +50,42 @@ func createProxyServer(cfg *config.Config) (*proxyServer, error) {
 		err := fmt.Errorf("config`s 'server.cluster' must contain role as 'server.cluster.enable' is ture")
 		return nil, errors.New(err.Error())
 	}
+	if cfg.GenericServerRunOptions.Cluster.Enable{
 
-	discoverIns, err := etcd.GetEtcdFactoryOr(cfg.EtcdOptions, func() {
+		discoverIns, err := etcd.GetEtcdFactoryOr(cfg.EtcdOptions, func() {
 
-		instance, err := etcd.GetEtcdFactoryOr(nil, nil)
-		if err != nil {
-			log.Errorf("etcd on keepalive failure function found an error %s", err.Error())
-			return
-		}
-		err = instance.Register().RestartSession()
-		if err != nil {
-			log.Errorf("etcd failed to restart session error ---> %s", err.Error())
-
-		}
-		log.Infof("etcd restart session successful")
-
-		for i := 1; i <= 5; i++ {
-
-			err := instance.Register().RecoveryServiceRegister(context.TODO())
-			if err == nil {
+			instance, err := etcd.GetEtcdFactoryOr(nil, nil)
+			if err != nil {
+				log.Errorf("etcd on keepalive failure function found an error %s", err.Error())
 				return
+			}
+			err = instance.Register().RestartSession()
+			if err != nil {
+				log.Errorf("etcd failed to restart session error ---> %s", err.Error())
 
-			} else {
-				log.Errorf(err.Error())
+			}
+			log.Infof("etcd restart session successful")
+
+			for i := 1; i <= 5; i++ {
+
+				err := instance.Register().RecoveryServiceRegister(context.TODO())
+				if err == nil {
+					return
+
+				} else {
+					log.Errorf(err.Error())
+				}
+
+				time.Sleep(1 * time.Second)
 			}
 
-			time.Sleep(1 * time.Second)
+		})
+		if err != nil {
+			return nil, err
 		}
+		discover.SetClient(discoverIns)
 
-	})
-	if err != nil {
-		return nil, err
 	}
-	discover.SetClient(discoverIns)
-
 	genericConfig, err := buildGenericConfig(cfg)
 	if err != nil {
 		return nil, err

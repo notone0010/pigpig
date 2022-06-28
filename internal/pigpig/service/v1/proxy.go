@@ -46,7 +46,6 @@ func newProxy(srv *service) *proxyService {
 
 func (p *proxyService) FetchRemoteResponse(c *dudu.Context) {
 	// create pool for prepare request object
-
 	detail := c.RequestDetail
 
 	sendTime := time.Now()
@@ -66,12 +65,11 @@ func (p *proxyService) FetchRemoteResponse(c *dudu.Context) {
 }
 
 func NewResponseDetail(response *http.Response, body []byte) *dudu.ResponseDetail {
-	responseDetail := &dudu.ResponseDetail{
+	return &dudu.ResponseDetail{
 		StatusCode: response.StatusCode,
 		Header:     response.Header,
 		Body:       body,
 		RawBody:    response.Body,
 		Response:   response,
 	}
-	return responseDetail
 }

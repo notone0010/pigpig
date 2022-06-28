@@ -15,37 +15,50 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/andybalholm/brotli"
 	"github.com/klauspost/compress/gzip"
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pigpig/transport"
 	"github.com/notone/pigpig/internal/pigpig/dudu"
+	"github.com/notone/pigpig/internal/pigpig/transport"
 	"github.com/notone/pigpig/pkg/log"
 	"github.com/parnurzeal/gorequest"
 )
 
 type RequestTransport struct {
 	// you can set some options
+
+	saPool sync.Pool
 }
 
 var _ transport.GoRequestTransport = (*RequestTransport)(nil)
 
-var requestEngine transport.Factory
+var requestEngine transport.GoRequestTransport
 
-func (e RequestTransport) GoRequest() transport.GoRequestTransport {
-	return &RequestTransport{}
+func (e *RequestTransport) GoRequest() transport.GoRequestTransport {
+	if requestEngine != nil {
+		return requestEngine
+	}
+	requestEngine := &RequestTransport{}
+	requestEngine.saPool.New = func() interface{} {
+		return gorequest.New()
+	}
+	return requestEngine
 }
 
-func (e RequestTransport) Close() error {
+func (e *RequestTransport) Close() error {
 	return nil
 }
 
-func (e RequestTransport) FetchRemoteResponse(c *dudu.RequestDetail) (*http.Response, []byte, error) {
+func (e *RequestTransport) FetchRemoteResponse(c *dudu.RequestDetail) (*http.Response, []byte, error) {
 	var (
 		err error
 	)
-	sa := gorequest.New()
+	sa := e.saPool.Get().(*gorequest.SuperAgent)
+	sa.ClearSuperAgent()
+	defer e.saPool.Put(sa)
 	if err = PrepareRequestDetail(sa, c); err != nil {
 		log.Error(err.Error())
 		return nil, nil, err
@@ -157,6 +170,8 @@ func PrepareRequestDetail(s *gorequest.SuperAgent, c *dudu.RequestDetail) error 
 		return http.ErrUseLastResponse
 	})
 	s.FormData = c.RequestData
+
+	s.Timeout(60 * time.Second)
 	return nil
 }
 
@@ -175,6 +190,10 @@ func RequestRemote(s *gorequest.SuperAgent) (response gorequest.Response, body [
 }
 
 func GetGorequestTransport() transport.Factory {
-	requestEngine = &RequestTransport{}
-	return requestEngine
+	requestTransport := &RequestTransport{}
+	requestTransport.saPool.New = func() interface{} {
+		return gorequest.New()
+	}
+	requestEngine = requestTransport
+	return requestTransport
 }
