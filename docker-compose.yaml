@@ -42,11 +42,11 @@ services:
     restart: unless-stopped
 
   pigpig-master:
-    image: 127.0.0.1:5050/notone/pigpig-arm64:v1.0.0-5-g080201b
+    image: notone0011/pigpig-arm64
     container_name: pigpig-master
     command: -c /etc/pigpig/pigpig.yaml --server.cluster.enable=true --server.cluster.name=my_cluster --server.cluster.role=master -m=true --log.level=info
     ports:
-      - 8088:8088
+      - 8080:8080
       - 8443:8443
     networks:
       pigpig_net:
@@ -69,11 +69,11 @@ services:
       - pigpig-redis
 
   pigpig-slave1:
-    image: 127.0.0.1:5050/notone/pigpig-arm64:v1.0.0-5-g080201b
+    image: notone0011/pigpig-arm64
     container_name: pigpig-slave1
     command: -c /etc/pigpig/pigpig.yaml --server.cluster.enable=true --server.cluster.name=my_cluster --server.cluster.role=slave --log.level=info
     ports:
-      - 9088:8088
+      - 9080:8080
       - 9443:8443
     networks:
       pigpig_net:
