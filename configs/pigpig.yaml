@@ -11,7 +11,7 @@ server:
   middlewares: requestid,logger # 加载的 中间件列表，多个中间件，逗号(,)隔开
   max-ping-count: 3 # http 服务启动后，自检尝试次数，默认 3
   cluster:
-    enable: true # 是否开启集群模式
+    enable: false # 是否开启集群模式
     name: "pigpig-cluster" # 集群名称
     role: "salve"  # 服务器的集群角色
     is_master_handle: true # master 节点是否处理请求, 流量较大时可关闭此选项
@@ -24,14 +24,14 @@ server:
 # HTTP 配置
 insecure:
   bind-address: 0.0.0.0 # 绑定的不安全 IP 地址，设置为 0.0.0.0 表示使用全部网络接口，默认为 127.0.0.1
-  bind-port: 8089 # 提供非安全认证的监听端口，默认为 8080
+  bind-port: 8088 # 提供非安全认证的监听端口，默认为 8080
 #    bind-address: ${PIGPIG_INSECURE_BIND_ADDRESS} # 绑定的不安全 IP 地址，设置为 0.0.0.0 表示使用全部网络接口，默认为 127.0.0.1
 #    bind-port: ${PIGPIG_INSECURE_BIND_PORT} # 提供非安全认证的监听端口，默认为 8080
 
 # HTTPS 配置
 secure:
   bind-address: 0.0.0.0 # HTTPS 安全模式的 IP 地址，默认为 0.0.0.0
-  bind-port: 8444
+  bind-port: 8443
   # 使用 HTTPS 安全模式的端口号，设置为 0 表示不启用 HTTPS，默认为 8443
   tls:
     #cert-dir: .iam/cert # TLS 证书所在的目录，默认值为 /var/run/iam
