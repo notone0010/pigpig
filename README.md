@@ -3,7 +3,7 @@
 ***PigPig*** 是受**anyproxy**的启发并且结合工作中所遇到的一些问题的解决方案，基于go语言开发的分布式代理服务器。
 支持插件化的HTTP/HTTPS代理服务器，支持动态水平扩容。可供二次开发更灵活的处理请求逻辑，并且支持HTTPS的解析
 
-代码架构是通过 来源于极客时间专栏 **《[Go 语言项目开发实战](https://time.geekbang.org/column/intro/100079601?tab=intro)》**
+代码架构 来源于极客时间专栏 **《[Go 语言项目开发实战](https://time.geekbang.org/column/intro/100079601?tab=intro)》**
 
 ***特此申明：*** 项目中很多基础代码都是通过该专栏习得，部分直接引用。
 
