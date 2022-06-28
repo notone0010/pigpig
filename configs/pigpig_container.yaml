@@ -6,7 +6,6 @@
 
 # RESTful 服务配置
 server:
-  mode: debug # server mode: release, debug, test，默认 release
   healthz: true # 是否开启健康检查，如果开启会安装 /healthz 路由，默认 true
   middlewares: requestid,logger # 加载的 中间件列表，多个中间件，逗号(,)隔开
   max-ping-count: 3 # http 服务启动后，自检尝试次数，默认 3
@@ -16,15 +15,10 @@ server:
     role: "master"  # 服务器的集群角色
     is_master_handle: true # master 节点是否处理请求, 流量较大时可关闭此选项
 
-## GRPC 服务配置
-#grpc:
-#  bind-address: ${PIGPIG_GRPC_BIND_ADDRESS} # grpc 安全模式的 IP 地址，默认 0.0.0.0
-#  bind-port: ${PIGPIG_GRPC_BIND_PORT} # grpc 安全模式的端口号，默认 8081
-
 # HTTP 配置
 insecure:
   bind-address: 0.0.0.0 # 绑定的不安全 IP 地址，设置为 0.0.0.0 表示使用全部网络接口，默认为 127.0.0.1
-  bind-port: 8088 # 提供非安全认证的监听端口，默认为 8080
+  bind-port: 8080 # 提供非安全认证的监听端口，默认为 8080
 #    bind-address: ${PIGPIG_INSECURE_BIND_ADDRESS} # 绑定的不安全 IP 地址，设置为 0.0.0.0 表示使用全部网络接口，默认为 127.0.0.1
 #    bind-port: ${PIGPIG_INSECURE_BIND_PORT} # 提供非安全认证的监听端口，默认为 8080
 
@@ -39,17 +33,6 @@ secure:
     cert-key:
       cert-file: "/etc/cert/PigPig.crt" # 包含 x509 证书的文件路径，用 HTTPS 认证
       private-key-file: "/etc/cert/PigPig.key" # TLS 私钥
-
-# MySQL 数据库相关配置
-mysql:
-  host: ${MARIADB_HOST} # MySQL 机器 ip 和端口，默认 127.0.0.1:3306
-  username: ${MARIADB_USERNAME} # MySQL 用户名(建议授权最小权限集)
-  password: ${MARIADB_PASSWORD} # MySQL 用户密码
-  database: ${MARIADB_DATABASE} # iam 系统所用的数据库名
-  max-idle-connections: 100 # MySQL 最大空闲连接数，默认 100
-  max-open-connections: 100 # MySQL 最大打开的连接数，默认 100
-  max-connection-life-time: 10s # 空闲连接最大存活时间，默认 10s
-  log-level: 4 # GORM log level, 1: silent, 2:error, 3:warn, 4:info
 
 # Redis 配置
 redis:
