@@ -69,7 +69,8 @@ func NewUserController(engine *dudu.ProxyHttpMux,
 // ChooseHandler select handler by http method
 func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
 
-	p.handlerComplete()
+	// p.handlerComplete()
+
 	if r.Header.Get(dudu.InternalHeaderFullPath) == "" {
 		r.Header.Add(dudu.InternalHeaderFullPath, r.RequestURI)
 	}
@@ -99,6 +100,11 @@ func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
 		} else {
 			// default choose round-robin
 			nextIndex, _ = p.Lb.RR().SwitchTo(len(serviceList))
+		}
+		if len(serviceList) == 0 {
+			log.Warn("as the cluster server size is 0, will use default server to handle")
+			p.GoHandle(w, r)
+			return
 		}
 		targetHost := serviceList[nextIndex]
 

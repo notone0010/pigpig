@@ -25,7 +25,6 @@ import (
 	"github.com/notone/pigpig/internal/pkg/middleware"
 	"github.com/notone/pigpig/pkg/log"
 
-
 	"github.com/marmotedu/component-base/pkg/version"
 )
 

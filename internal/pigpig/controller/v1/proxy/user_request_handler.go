@@ -18,6 +18,7 @@ import (
 // UserRequestHandler deal with any http requests
 func (p *ProxyController) UserRequestHandler(c *dudu.Context) {
 	c.Handlers = p.Plugins
+	c.Handlers = append(c.Handlers, p.srv.Proxy().FetchRemoteResponse)
 	c.Next()
 
 	if c.Errors != nil && len(c.Errors) > 0 && p.handleErrorFunc != nil {
