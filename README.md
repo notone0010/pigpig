@@ -9,6 +9,11 @@
 
 Github地址: https://github.com/notone0010/pigpig
 
+# Docker image
+```bash
+docker pull notone0011/pigpig-arm64
+```
+
 ## 安装
 
 1. Docker/Docker-Compose
@@ -55,7 +60,7 @@ $ make
 
 [Documentation](docs)
 
-### benchmark
+### Benchmark
 ![a-benchmark](./docs/images/pigpig.png)
 
 [comment]: <> (# ***未经授权不可商用***)
