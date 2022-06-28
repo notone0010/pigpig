@@ -28,16 +28,16 @@ import (
 
 var errCodeDocPrefix = `# 错误码
 
-！！IAM 系统错误码列表，由 {{.}}codegen -type=int -doc{{.}} 命令生成，不要对此文件做任何更改。
+！！PigPig 系统错误码列表，由 {{.}}codegen -type=int -doc{{.}} 命令生成，不要对此文件做任何更改。
 
 ## 功能说明
 
-如果返回结果中存在 {{.}}code{{.}} 字段，则表示调用 API 接口失败。例如：
+如果返回结果中存在 {{.}}code{{.}} 字段，则表示调用 响应失败。例如：
 
 {{.}}{{.}}{{.}}json
 {
-  "code": 100101,
-  "message": "Database error"
+  "code": 110201,
+  "message": "Error occurred while requesting remote server"
 }
 {{.}}{{.}}{{.}}
 
@@ -45,7 +45,7 @@ var errCodeDocPrefix = `# 错误码
 
 ## 错误码列表
 
-IAM 系统支持的错误码列表如下：
+PigPig 系统支持的错误码列表如下(其中1102xx 为pigpig 服务定义错误码)：
 
 | Identifier | Code | HTTP Code | Description |
 | ---------- | ---- | --------- | ----------- |

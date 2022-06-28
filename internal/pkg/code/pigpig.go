@@ -9,7 +9,7 @@ package code
 // pigpig: service errors.
 const (
 	// ErrUserNotFound - 502: Error occurred while requesting remote server.
-	ErrRemoteUnreached int = iota + 110001
+	ErrRemoteUnreached int = iota + 110201
 
 	// ErrRemoteTimeout - 504: Timeout occurred while requesting remote server.
 	ErrRemoteTimeout
