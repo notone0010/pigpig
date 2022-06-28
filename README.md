@@ -49,4 +49,4 @@ $ make
 
 ### 使用指南&&参数详解
 
-[Documentation](docs/guide/zh-CN/operation-guide)
+[Documentation](docs)
