@@ -1,15 +1,15 @@
 # 错误码
 
-！！IAM 系统错误码列表，由 `codegen -type=int -doc` 命令生成，不要对此文件做任何更改。
+！！PigPig 系统错误码列表，由 `codegen -type=int -doc` 命令生成，不要对此文件做任何更改。
 
 ## 功能说明
 
-如果返回结果中存在 `code` 字段，则表示调用 API 接口失败。例如：
+如果返回结果中存在 `code` 字段，则表示调用 响应失败。例如：
 
 ```json
 {
-  "code": 100101,
-  "message": "Database error"
+  "code": 110201,
+  "message": "Error occurred while requesting remote server"
 }
 ```
 
@@ -17,7 +17,7 @@
 
 ## 错误码列表
 
-IAM 系统支持的错误码列表如下：
+PigPig 系统支持的错误码列表如下(其中1102xx 为pigpig 服务定义错误码)：
 
 | Identifier | Code | HTTP Code | Description |
 | ---------- | ---- | --------- | ----------- |
@@ -43,9 +43,9 @@ IAM 系统支持的错误码列表如下：
 | ErrInvalidYaml | 100306 | 500 | Data is not valid Yaml |
 | ErrEncodingYaml | 100307 | 500 | Yaml data could not be encoded |
 | ErrDecodingYaml | 100308 | 500 | Yaml data could not be decoded |
-| ErrRemoteUnreached | 110001 | 502 | Error occurred while requesting remote server |
-| ErrRemoteTimeout | 110002 | 504 | Timeout occurred while requesting remote server |
-| ErrContentDecodingFailed | 110003 | 500 | Error occurred while remote response content decoding |
-| ErrContentEncodingFailed | 110004 | 500 | Error occurred while remote response content encoding |
-| ErrProxyInternal | 110005 | 500 | An internal error occurred while the proxy server is processing |
+| ErrRemoteUnreached | 110201 | 502 | Error occurred while requesting remote server |
+| ErrRemoteTimeout | 110202 | 504 | Timeout occurred while requesting remote server |
+| ErrContentDecodingFailed | 110203 | 500 | Error occurred while remote response content decoding |
+| ErrContentEncodingFailed | 110204 | 500 | Error occurred while remote response content encoding |
+| ErrProxyInternal | 110205 | 500 | An internal error occurred while the proxy server is processing |
 
