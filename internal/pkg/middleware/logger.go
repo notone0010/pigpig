@@ -89,9 +89,9 @@ func LoggerWithConfig() v1.HandlerFunc {
 		if c.Errors != nil && len(c.Errors) > 0 {
 			param.ErrorMessage = errors.NewAggregate(c.Errors).Error()
 		}
-		if c.Request.TLS != nil{
+		if c.Request.TLS != nil {
 			param.Protocol = "HTTPS"
-		}else {
+		} else {
 			param.Protocol = "HTTP"
 		}
 

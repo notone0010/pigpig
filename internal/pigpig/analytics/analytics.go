@@ -176,9 +176,6 @@ func DurationToMillisecond(d time.Duration) float64 {
 	return float64(d) / 1e6
 }
 
-
-
-
 /*
 func (auth *Authorization) LogGrantedAccessRequest(r *ladon.Request, p ladon.Policies, d ladon.Policies) {
 	conclusion := fmt.Sprintf("policies %s allow access", joinPoliciesNames(d))
@@ -196,4 +193,4 @@ func (auth *Authorization) LogGrantedAccessRequest(r *ladon.Request, p ladon.Pol
 	record.SetExpiry(0)
 	_ = analytics.GetAnalytics().RecordHit(&record)
 }
- */
+*/

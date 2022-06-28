@@ -1,4 +1,4 @@
-# Copyright 2020 Lingfei Kong <colin404@foxmail.com>. All rights reserved.
+# Copyright 2022 NotOne Lv <aiphalv0010@gmail.com>. All rights reserved.
 # Use of this source code is governed by a MIT style
 # license that can be found in the LICENSE file.
 
@@ -6,13 +6,13 @@
 .DEFAULT_GOAL := all
 
 .PHONY: all
-all: tidy gen add-copyright format lint cover build
+all: tidy gen add-copyright lint build
 
 # ==============================================================================
 # Build options
 
 ROOT_PACKAGE=github.com/notone/pigpig
-VERSION_PACKAGE=github.com/notone/pigpig/internal/version
+VERSION_PACKAGE=github.com/marmotedu/component-base/pkg/version
 
 # ==============================================================================
 # Includes
@@ -108,13 +108,13 @@ lint:
 #	@$(MAKE) go.test.cover
 
 ## format: Gofmt (reformat) package sources (exclude vendor dir if existed).
-.PHONY: format
-format: tools.verify.golines tools.verify.goimports
-	@echo "===========> Formating codes"
-	@$(FIND) -type f -name '*.go' | $(XARGS) gofmt -s -w
-	@$(FIND) -type f -name '*.go' | $(XARGS) goimports -w -local $(ROOT_PACKAGE)
-	@$(FIND) -type f -name '*.go' | $(XARGS) golines -w --max-len=120 --reformat-tags --shorten-comments --ignore-generated .
-	@$(GO) mod edit -fmt
+#.PHONY: format
+#format: tools.verify.golines tools.verify.goimports
+#	@echo "===========> Formating codes"
+#	@$(FIND) -type f -name '*.go' | $(XARGS) gofmt -s -w
+#	@$(FIND) -type f -name '*.go' | $(XARGS) goimports -w -local $(ROOT_PACKAGE)
+#	@$(FIND) -type f -name '*.go' | $(XARGS) golines -w --max-len=120 --reformat-tags --shorten-comments --ignore-generated .
+#	@$(GO) mod edit -fmt
 
 ## verify-copyright: Verify the boilerplate headers for all files.
 .PHONY: verify-copyright

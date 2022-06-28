@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// logger
 package dudu
 
 import (
@@ -27,10 +26,10 @@ const (
 	YellowBold  = "\033[33;1m"
 )
 
-// LogFormatter gives the signature of the formatter function passed to LoggerWithFormatter
+// LogFormatter gives the signature of the formatter function passed to LoggerWithFormatter.
 type LogFormatter func(params LogFormatterParams) string
 
-// LogFormatterParams is the structure any formatter will be handed when time to log comes
+// LogFormatterParams is the structure any formatter will be handed when time to log comes.
 type LogFormatterParams struct {
 	Request *http.Request
 
@@ -104,7 +103,6 @@ func (p *LogFormatterParams) MethodColor() string {
 func (p *LogFormatterParams) ResetColor() string {
 	return Reset
 }
-
 
 // defaultLogFormatter is the default log format function Logger middleware uses.
 var defaultLogFormatter = func(param LogFormatterParams) string {

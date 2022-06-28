@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// dudu
 package dudu
 
 // this package name is dudu because 'dudu' is my transport tool

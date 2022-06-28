@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// etcd
 package etcd
 
 import (
@@ -39,7 +38,7 @@ func (r *register) getKey(clusterId, proto, name string) string {
 	return fmt.Sprintf(keyRegister, clusterId, proto, name)
 }
 
-// NewServiceRegister handle new service register into etcd for server discover
+// NewServiceRegister handle new service register into etcd for server discover.
 func (r *register) NewServiceRegister(ctx context.Context, clusterId, proto, key, value string) error {
 	_key := r.getKey(clusterId, proto, key)
 	if err := r.ds.PutSession(ctx, _key, value); err != nil {

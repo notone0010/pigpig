@@ -38,7 +38,6 @@ func generateWriterSyncer(category string, opts *Options) []zapcore.WriteSyncer 
 			if err != nil {
 				panic(err.Error())
 			}
-
 		}
 		wss = append(wss, ws)
 	}
@@ -46,7 +45,7 @@ func generateWriterSyncer(category string, opts *Options) []zapcore.WriteSyncer 
 	return wss
 }
 
-// generate rotate logger
+// generate rotate logger.
 func buildRollingLogger(path string, opts *Options) *rolling.Logger {
 	return rolling.NewLogger(
 		path,

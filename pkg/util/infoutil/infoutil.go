@@ -12,6 +12,7 @@ import (
 
 	"github.com/bwmarrin/snowflake"
 	"github.com/marmotedu/errors"
+	"github.com/notone/pigpig/pkg/log"
 )
 
 func GetTransportAddr() (string, error) {
@@ -61,6 +62,14 @@ func (d *DistributedId) ParseId(id interface{}) (snowflake.ID, error) {
 }
 
 func GetDistributedNode() *DistributedId {
+	if distributedId == nil {
+		distributedId, err := NewDistributedId(1)
+		if err != nil {
+			log.Fatalf("failed to create DistributedId --- %s", err.Error())
+			return nil
+		}
+		return distributedId
+	}
 	return distributedId
 }
 

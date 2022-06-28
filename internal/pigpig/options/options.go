@@ -66,6 +66,5 @@ func (o *Options) String() string {
 
 // Complete set default Options.
 func (o *Options) Complete() error {
-
 	return o.SecureServing.Complete()
 }

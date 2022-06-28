@@ -8,10 +8,12 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+// Logger.
 type Logger struct {
 	*lumberjack.Logger
 }
 
+// Opt func signed.
 type Opt func(*Logger)
 
 // WithMaxSize set log maximum size in MB, defaults to 100 MB.

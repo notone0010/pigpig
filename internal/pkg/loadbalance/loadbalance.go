@@ -2,13 +2,13 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// loadbalance
 package loadbalance
 
-// LB type can choose among round-robin, hash and consistent-hash
+// lb type can choose among round-robin, hash and consistent-hash
 
 var client Factory
 
+// Factory load balance factory.
 type Factory interface {
 	RR() RRLB
 	Shuffle() ShuffleLB
@@ -16,10 +16,12 @@ type Factory interface {
 	// SwitchTo(policy LbType, alternativeIndexes []int) (int, error)
 }
 
+// Client returns a exist client.
 func Client() Factory {
 	return client
 }
 
+// SetClient set client to global client.
 func SetClient(factory Factory) {
 	client = factory
 }

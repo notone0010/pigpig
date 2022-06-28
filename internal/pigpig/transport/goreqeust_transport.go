@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// transport
 package transport
 
 import (
@@ -11,6 +10,7 @@ import (
 	"github.com/notone/pigpig/internal/pigpig/dudu"
 )
 
+// GoRequestTransport transport interface.
 type GoRequestTransport interface {
 	// go request transport include functions
 	FetchRemoteResponse(c *dudu.RequestDetail) (*http.Response, []byte, error)

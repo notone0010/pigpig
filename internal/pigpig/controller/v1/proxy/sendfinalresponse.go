@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// proxy
 package proxy
 
 import (
@@ -11,11 +10,10 @@ import (
 	"strings"
 
 	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/pkg/log"
 )
 
+// SendFinalResponse send final response to client.
 func (p *ProxyController) SendFinalResponse(c *dudu.Context) error {
-
 	resHeader := c.ResponseDetail.Header
 	resBody := c.ResponseDetail.Body
 
@@ -24,7 +22,6 @@ func (p *ProxyController) SendFinalResponse(c *dudu.Context) error {
 	if transferEncoding != "" {
 		resHeader.Set("X-Pigpig-Origin-Transfer-Encoding", transferEncoding)
 		resHeader.Del("Transfer-Encoding")
-
 	}
 	if contentLength != "" {
 		resHeader.Del("Content-Length")
@@ -42,8 +39,7 @@ func (p *ProxyController) SendFinalResponse(c *dudu.Context) error {
 		c.Writer.Header().Set(k, strings.Join(v, headerSeq))
 	}
 	setCookies := c.ResponseDetail.Cookies()
-	if setCookies != nil && len(setCookies) != 0 {
-		var ()
+	if len(setCookies) != 0 {
 		for _, setCookie := range setCookies {
 			http.SetCookie(c.Writer, setCookie)
 		}
@@ -52,10 +48,9 @@ func (p *ProxyController) SendFinalResponse(c *dudu.Context) error {
 	// 限速或限流可以在这里操作
 
 	c.Writer.WriteHeader(c.ResponseDetail.StatusCode)
-	code, err := c.Writer.Write(c.ResponseDetail.Body)
-	if err != nil {
-		log.Errorf("be seem had a error when send final response ----> code: %d", code)
+	if _, err := c.Writer.Write(resBody); err != nil {
 		return err
 	}
+
 	return nil
 }

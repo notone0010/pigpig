@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// proxy
 package dudu
 
 import (
@@ -59,6 +58,7 @@ func (w *responseWriter) reset(writer http.ResponseWriter) {
 	w.status = defaultStatus
 }
 
+// WriteHeader write to response header.
 func (w *responseWriter) WriteHeader(code int) {
 	if code > 0 && w.status != code {
 		if w.Written() {
@@ -68,6 +68,7 @@ func (w *responseWriter) WriteHeader(code int) {
 	}
 }
 
+// WriteHeaderNow write now.
 func (w *responseWriter) WriteHeaderNow() {
 	if !w.Written() {
 		w.size = 0
@@ -75,28 +76,35 @@ func (w *responseWriter) WriteHeaderNow() {
 	}
 }
 
+// Write write to response.
 func (w *responseWriter) Write(data []byte) (n int, err error) {
 	w.WriteHeaderNow()
 	n, err = w.ResponseWriter.Write(data)
 	w.size += n
+
 	return
 }
 
+// WriteString write to response string.
 func (w *responseWriter) WriteString(s string) (n int, err error) {
 	w.WriteHeaderNow()
 	n, err = io.WriteString(w.ResponseWriter, s)
 	w.size += n
+
 	return
 }
 
+// Status status.
 func (w *responseWriter) Status() int {
 	return w.status
 }
 
+// Size write size.
 func (w *responseWriter) Size() int {
 	return w.size
 }
 
+// Written whether wrote.
 func (w *responseWriter) Written() bool {
 	return w.size != noWritten
 }
@@ -106,6 +114,7 @@ func (w *responseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
 	if w.size < 0 {
 		w.size = 0
 	}
+
 	return w.ResponseWriter.(http.Hijacker).Hijack()
 }
 
@@ -120,9 +129,11 @@ func (w *responseWriter) Flush() {
 	w.ResponseWriter.(http.Flusher).Flush()
 }
 
+// Pusher returns http.Pusher.
 func (w *responseWriter) Pusher() (pusher http.Pusher) {
 	if pusher, ok := w.ResponseWriter.(http.Pusher); ok {
 		return pusher
 	}
+
 	return nil
 }

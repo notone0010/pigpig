@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// proxy
 package dudu
 
 import (
@@ -12,13 +11,12 @@ import (
 	"net/url"
 	"sync"
 	"time"
-
-	"github.com/notone/pigpig/pkg/util/infoutil"
 )
 
 // abortIndex represents a typical value used in abort functions.
 const abortIndex int8 = math.MaxInt8 >> 1
 
+// Context custom context.
 type Context struct {
 	writermem responseWriter
 
@@ -29,10 +27,6 @@ type Context struct {
 	RequestDetail *RequestDetail
 
 	ResponseDetail *ResponseDetail
-
-	RequestURL *url.URL
-
-	DistributedNode *infoutil.DistributedId
 
 	// Handlers HandlersChain
 	Handlers HandlersChain
@@ -52,6 +46,7 @@ type Context struct {
 	fullPath string
 }
 
+// ResponseDetail ...
 type ResponseDetail struct {
 	// StatusCode the code that response
 	StatusCode int `json:"status_code"`
@@ -72,7 +67,7 @@ type ResponseDetail struct {
 	*http.Response
 }
 
-// 代理请求客户端对象
+// RequestDetail 代理请求客户端对象.
 type RequestDetail struct {
 	// Instance the client request instance, for example, tianyancha.com
 	Instance string `json:"instance"`
@@ -127,6 +122,7 @@ type RequestDetail struct {
 	OutOffAt time.Time `json:"out_off_at"`
 }
 
+// RequestOptions request options.
 type RequestOptions struct {
 	Hostname string
 
@@ -139,6 +135,7 @@ type RequestOptions struct {
 	Header http.Header
 }
 
+// NewContext returns new Context.
 func NewContext(engine *ProxyHttpMux) *Context {
 	return &Context{engine: engine}
 }
@@ -149,12 +146,13 @@ func (c *Context) FullPath() string {
 	return c.fullPath
 }
 
-// FullPath returns a request full path
-// url: /login  calls FullPath() -> http://example.com/login/
+// SerializeFullPath returns a request full path
+// url: /login  calls SerializeFullPath() -> http://example.com/login/
 func (c *Context) SerializeFullPath() string {
 	return c.Request.URL.String()
 }
 
+// InitContext initial context.
 func (c *Context) InitContext() {
 	c.Writer = &c.writermem
 	c.fullPath = c.SerializeFullPath()
@@ -162,6 +160,7 @@ func (c *Context) InitContext() {
 	c.NewPrepareRequest()
 }
 
+// NewPrepareRequest returns NewPrepareRequest.
 func (c *Context) NewPrepareRequest() {
 	options := &RequestOptions{
 		Method:   c.Request.Method,
@@ -190,10 +189,19 @@ func (c *Context) NewPrepareRequest() {
 	c.RequestDetail = detail
 }
 
-func (c *Context) GetContextObj(w http.ResponseWriter, r *http.Request) {
+// GetContextObj reset context object.
+func (c *Context) GetContextObj(w http.ResponseWriter, r *http.Request, engine *ProxyHttpMux) {
 	c.writermem.reset(w)
+	c.Writer = &c.writermem
 	c.Request = r
+	c.engine = engine
+	c.RequestDetail = nil
+	c.ResponseDetail = nil
 	c.index = -1
+	c.Handlers = nil
+	c.fullPath = ""
+	c.Keys = nil
+	c.Errors = c.Errors[:0]
 	c.InitContext()
 }
 
@@ -250,7 +258,7 @@ func (c *Context) Set(key string, value interface{}) {
 }
 
 // Get returns the value for the given key, ie: (value, true).
-// If the value does not exists it returns (nil, false)
+// If the value does not exists it returns (nil, false).
 func (c *Context) Get(key string) (value interface{}, exists bool) {
 	c.mu.RLock()
 	value, exists = c.Keys[key]
@@ -327,6 +335,7 @@ func (c *Context) GetTime(key string) (t time.Time) {
 	if val, ok := c.Get(key); ok && val != nil {
 		t, _ = val.(time.Time)
 	}
+
 	return
 }
 
@@ -335,6 +344,7 @@ func (c *Context) GetDuration(key string) (d time.Duration) {
 	if val, ok := c.Get(key); ok && val != nil {
 		d, _ = val.(time.Duration)
 	}
+
 	return
 }
 
@@ -343,6 +353,7 @@ func (c *Context) GetStringSlice(key string) (ss []string) {
 	if val, ok := c.Get(key); ok && val != nil {
 		ss, _ = val.([]string)
 	}
+
 	return
 }
 
@@ -351,6 +362,7 @@ func (c *Context) GetStringMap(key string) (sm map[string]interface{}) {
 	if val, ok := c.Get(key); ok && val != nil {
 		sm, _ = val.(map[string]interface{})
 	}
+
 	return
 }
 
@@ -385,6 +397,11 @@ func (c *Context) requestHeader(key string) string {
 // for this request are not called.
 func (c *Context) Abort() {
 	c.index = abortIndex
+}
+
+// IsAborted context whether abort.
+func (c *Context) IsAborted() bool {
+	return c.index >= abortIndex
 }
 
 // Next should be used only inside middleware.

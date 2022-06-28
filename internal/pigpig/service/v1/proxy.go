@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// proxy
 package v1
 
 import (
@@ -14,8 +13,8 @@ import (
 	"github.com/notone/pigpig/pkg/log"
 )
 
+// ProxySrv proxy service interface.
 type ProxySrv interface {
-
 	// PrepareRequest prepare request`s informations and options
 	// PrepareRequest(r *http.Request) *dudu.ClientDetail
 
@@ -44,9 +43,9 @@ func newProxy(srv *service) *proxyService {
 	return &proxyService{transport: srv.transport}
 }
 
+// FetchRemoteResponse called transport interface to fetch remote response.
 func (p *proxyService) FetchRemoteResponse(c *dudu.Context) {
 	// create pool for prepare request object
-
 	detail := c.RequestDetail
 
 	sendTime := time.Now()
@@ -55,23 +54,24 @@ func (p *proxyService) FetchRemoteResponse(c *dudu.Context) {
 		log.Errorf("fetch remote response found error %s", remoteErr.Error())
 		c.Errors = append(c.Errors, remoteErr)
 		c.Abort()
+
 		return
 	}
 
 	finalResponse := NewResponseDetail(resp, body)
 
-	finalResponse.ElapsedTime = time.Now().Sub(sendTime)
+	finalResponse.ElapsedTime = time.Since(sendTime)
 
 	c.ResponseDetail = finalResponse
 }
 
+// NewResponseDetail returns new dudu.ResponseDetail.
 func NewResponseDetail(response *http.Response, body []byte) *dudu.ResponseDetail {
-	responseDetail := &dudu.ResponseDetail{
+	return &dudu.ResponseDetail{
 		StatusCode: response.StatusCode,
 		Header:     response.Header,
 		Body:       body,
 		RawBody:    response.Body,
 		Response:   response,
 	}
-	return responseDetail
 }

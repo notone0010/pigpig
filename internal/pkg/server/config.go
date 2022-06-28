@@ -40,7 +40,7 @@ type Config struct {
 	Cluster dudu.Cluster
 }
 
-// ClusterOptions contains configuration items related to cluster
+// Cluster contains configuration items related to cluster.
 type Cluster struct {
 	Enable         bool
 	Role           string

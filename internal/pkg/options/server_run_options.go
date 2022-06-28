@@ -20,7 +20,7 @@ type ServerRunOptions struct {
 	Cluster ClusterOptions `json:"cluster" mapstructure:"cluster"`
 }
 
-// ClusterOptions contains role, enable and so on of current server
+// ClusterOptions contains role, enable and so on of current server.
 type ClusterOptions struct {
 	Enable         bool   `json:"enable" mapstructure:"enable"`
 	Role           string `json:"role" mapstructure:"role"`
@@ -53,6 +53,7 @@ func (s *ServerRunOptions) ApplyTo(c *server.Config) error {
 		LoadPolicy:     s.Cluster.LoadPolicy,
 		Name:           s.Cluster.Name,
 	}
+
 	return nil
 }
 

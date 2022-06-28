@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// etcd
 package etcd
 
 import (
@@ -83,7 +82,6 @@ func (d *serviceDiscover) GetHttpsService() []string {
 	}
 	return addrs
 }
-
 
 func (d *serviceDiscover) Close() error {
 	return d.ds.Close()

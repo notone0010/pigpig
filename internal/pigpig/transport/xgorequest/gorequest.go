@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// xgorequest
 package xgorequest
 
 import (
@@ -15,39 +14,56 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"sync"
+	"time"
 
 	"github.com/andybalholm/brotli"
 	"github.com/klauspost/compress/gzip"
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pigpig/transport"
 	"github.com/notone/pigpig/internal/pigpig/dudu"
+	"github.com/notone/pigpig/internal/pigpig/transport"
 	"github.com/notone/pigpig/pkg/log"
 	"github.com/parnurzeal/gorequest"
 )
 
+// RequestTransport request transport tool struct.
 type RequestTransport struct {
 	// you can set some options
+
+	saPool sync.Pool
 }
 
 var _ transport.GoRequestTransport = (*RequestTransport)(nil)
 
-var requestEngine transport.Factory
+var requestEngine transport.GoRequestTransport
 
-func (e RequestTransport) GoRequest() transport.GoRequestTransport {
-	return &RequestTransport{}
+// GoRequest got transport.GoRequestTransport obj.
+func (e *RequestTransport) GoRequest() transport.GoRequestTransport {
+	if requestEngine != nil {
+		return requestEngine
+	}
+	requestEngine := &RequestTransport{}
+	requestEngine.saPool.New = func() interface{} {
+		return gorequest.New()
+	}
+
+	return requestEngine
 }
 
-func (e RequestTransport) Close() error {
+// Close close.
+func (e *RequestTransport) Close() error {
 	return nil
 }
 
-func (e RequestTransport) FetchRemoteResponse(c *dudu.RequestDetail) (*http.Response, []byte, error) {
-	var (
-		err error
-	)
-	sa := gorequest.New()
+// FetchRemoteResponse fetch remote response.
+func (e *RequestTransport) FetchRemoteResponse(c *dudu.RequestDetail) (*http.Response, []byte, error) {
+	var err error
+	sa := e.saPool.Get().(*gorequest.SuperAgent)
+	sa.ClearSuperAgent()
+	defer e.saPool.Put(sa)
 	if err = PrepareRequestDetail(sa, c); err != nil {
 		log.Error(err.Error())
+
 		return nil, nil, err
 	}
 	var (
@@ -56,8 +72,9 @@ func (e RequestTransport) FetchRemoteResponse(c *dudu.RequestDetail) (*http.Resp
 		reqErr []error
 	)
 	resp, body, reqErr = RequestRemote(sa)
-	if reqErr != nil && len(reqErr) != 0 {
+	if len(reqErr) != 0 {
 		err = errors.NewAggregate(reqErr)
+
 		return nil, nil, err
 	}
 	if !c.DisableCompression {
@@ -79,10 +96,11 @@ func (e RequestTransport) FetchRemoteResponse(c *dudu.RequestDetail) (*http.Resp
 		resp.Header.Set("X-Pigpig-Origin-Connection", resp.Header.Get("Connection"))
 		resp.Header.Del("Connection")
 	}
+
 	return resp, body, err
 }
 
-// UncompressContentEncoding will hand content from remote response
+// UncompressContentEncoding will hand content from remote response.
 func UncompressContentEncoding(compressionType string, content io.Reader) (uncompressContent []byte, err error) {
 	switch compressionType {
 	case "gzip":
@@ -96,13 +114,12 @@ func UncompressContentEncoding(compressionType string, content io.Reader) (uncom
 
 		return uncompressContent, err
 	case "deflate":
-		var (
-			reader io.ReadCloser
-		)
+		var reader io.ReadCloser
 		reader = flate.NewReader(content)
 		defer reader.Close()
 
 		uncompressContent, err = ioutil.ReadAll(reader)
+
 		return uncompressContent, err
 	case "br":
 		var reader *brotli.Reader
@@ -110,15 +127,17 @@ func UncompressContentEncoding(compressionType string, content io.Reader) (uncom
 		reader = brotli.NewReader(content)
 
 		uncompressContent, err = ioutil.ReadAll(reader)
+
 		return uncompressContent, err
 
 	default:
 		uncompressContent, err = ioutil.ReadAll(content)
+
 		return uncompressContent, err
 	}
 }
 
-// PrepareRequestDetail will prepare some options and request-details when a request fetch to remote
+// PrepareRequestDetail will prepare some options and request-details when a request fetch to remote.
 func PrepareRequestDetail(s *gorequest.SuperAgent, c *dudu.RequestDetail) error {
 	// 更新请求body content-length
 	// 携带代理
@@ -127,9 +146,8 @@ func PrepareRequestDetail(s *gorequest.SuperAgent, c *dudu.RequestDetail) error 
 		addr := net.ParseIP(strings.Split(c.Proxy, ":")[0])
 		if addr == nil {
 			return errors.New("invalid ip address")
-		} else {
-			s.Proxy(c.Proxy)
 		}
+		s.Proxy(c.Proxy)
 	}
 	reqRemoteUrl := c.Request.Header.Get(dudu.InternalHeaderFullPath)
 	reqRemoteURL, _ := url.Parse(reqRemoteUrl)
@@ -139,7 +157,6 @@ func PrepareRequestDetail(s *gorequest.SuperAgent, c *dudu.RequestDetail) error 
 			reqRemoteURL.Scheme = "https"
 		}
 		reqRemoteURL.Host = c.Host
-
 	}
 
 	s.Url = reqRemoteURL.String()
@@ -150,13 +167,16 @@ func PrepareRequestDetail(s *gorequest.SuperAgent, c *dudu.RequestDetail) error 
 		InsecureSkipVerify: false,
 	}
 	s.RedirectPolicy(func(req gorequest.Request, via []gorequest.Request) error {
-		if via != nil && len(via) != 0 {
+		if len(via) != 0 {
 			log.Debugf("%s wants move to %s", via[0].URL.String(), req.URL.String())
-
 		}
+
 		return http.ErrUseLastResponse
 	})
 	s.FormData = c.RequestData
+
+	s.Timeout(60 * time.Second)
+
 	return nil
 }
 
@@ -166,15 +186,22 @@ func PrepareRequestDetail(s *gorequest.SuperAgent, c *dudu.RequestDetail) error 
 // 	// 记录旧的content-length
 // }
 
-// RequestRemote send request to remote server
+// RequestRemote send request to remote server.
 func RequestRemote(s *gorequest.SuperAgent) (response gorequest.Response, body []byte, errs []error) {
 	var _body string
 	response, _body, errs = s.End()
 	body = []byte(_body)
+
 	return
 }
 
+// GetGorequestTransport returns new transport.Factory.
 func GetGorequestTransport() transport.Factory {
-	requestEngine = &RequestTransport{}
-	return requestEngine
+	requestTransport := &RequestTransport{}
+	requestTransport.saPool.New = func() interface{} {
+		return gorequest.New()
+	}
+	requestEngine = requestTransport
+
+	return requestTransport
 }

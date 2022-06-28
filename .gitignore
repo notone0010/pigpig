@@ -348,3 +348,8 @@ dist
 .note.md
 
 # config files, may contain sensitive information
+
+# certificates
+*.key
+*.crt
+*.pem

@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// dudu
 package proxy
 
 import (
@@ -13,10 +12,10 @@ import (
 	"github.com/notone/pigpig/pkg/log"
 )
 
-// UserRequestHandler deal with any http requests
+// UserRequestHandler deal with any http requests.
 func (p *ProxyController) UserRequestHandler(c *dudu.Context) {
-	p.Plugins = append(p.Plugins, p.srv.Proxy().FetchRemoteResponse)
 	c.Handlers = p.Plugins
+	c.Handlers = append(c.Handlers, p.srv.Proxy().FetchRemoteResponse)
 	c.Next()
 
 	if c.Errors != nil && len(c.Errors) > 0 && p.handleErrorFunc != nil {
@@ -30,8 +29,7 @@ func (p *ProxyController) UserRequestHandler(c *dudu.Context) {
 		return
 	}
 
-	err := p.SendFinalResponse(c)
-	if err != nil {
+	if err := p.SendFinalResponse(c); err != nil {
 		log.Errorf("be seem had a error when send final response ----> %s", err.Error())
 	}
 }

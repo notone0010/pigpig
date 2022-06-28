@@ -1,4 +1,4 @@
-# Copyright 2020 Lingfei Kong <colin404@foxmail.com>. All rights reserved.
+# Copyright 2022 NotOne Lv <aiphalv0010@gmail.com>. All rights reserved.
 # Use of this source code is governed by a MIT style
 # license that can be found in the LICENSE file.
 
@@ -26,7 +26,7 @@ install.swagger:
 
 .PHONY: install.golangci-lint
 install.golangci-lint:
-	@$(GO) install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.43.0
+	@$(GO) install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.46.2
 	@golangci-lint completion bash > $(HOME)/.golangci-lint.bash
 	@if ! grep -q .golangci-lint.bash $(HOME)/.bashrc; then echo "source \$$HOME/.golangci-lint.bash" >> $(HOME)/.bashrc; fi
 

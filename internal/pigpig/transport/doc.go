@@ -2,6 +2,4 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// 存储类工厂函数
-// 模仿着来~~~
 package transport

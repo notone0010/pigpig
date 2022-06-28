@@ -1,10 +1,13 @@
-# AUTH Documentation
+### ...
 
-- [Quick Start](quickstart.md) - Read me first!
-- [Source Structure](source-structure.md) - TenC source structure
-- [Architecture](architecture.md) - Overview of the Helm/Tiller design
-- [Project Introduction](project.md) - Project Introduction
-- [TenC RESTful Resources](resources.md) - TenC RESTful resources
-- [Related Projects](related.md) - Releated projects
-- [Contributing](contributing/hacking.md) - About how to contribute to this project
-- [History](history.md) - A brief history of the project
+operation && e.g.
+: [operation](./guide/zh-CN/operation-guide/operation.md)
+: [docker-compose](./guide/zh-CN/operation-guide/docker-compose.md)
+: [curl](./guide/zh-CN/operation-guide/curl.md)
+: [python](./guide/zh-CN/operation-guide/python.md)
+
+quickstart
+: [quickstart](./guide/zh-CN/quickstart/quickstart.md)
+
+error code
+: [error_code](./guide/zh-CN/error_code_generated.md)
