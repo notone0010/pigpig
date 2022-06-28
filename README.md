@@ -55,4 +55,7 @@ $ make
 
 [Documentation](docs)
 
+### benchmark
+![a-benchmark](./docs/images/pigpig.png)
+
 [comment]: <> (# ***未经授权不可商用***)
