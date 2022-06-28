@@ -13,7 +13,7 @@ readonly LOCAL_OUTPUT_ROOT="${IAM_ROOT}/${OUT_DIR:-_output}"
 readonly LOCAL_OUTPUT_CAPATH="${LOCAL_OUTPUT_ROOT}/cert"
 
 # Hostname for the cert
-readonly CERT_HOSTNAME="${CERT_HOSTNAME:-iam.api.marmotedu.com,iam.authz.marmotedu.com},127.0.0.1,localhost"
+readonly CERT_HOSTNAME="127.0.0.1,localhost"
 
 # Run the cfssl command to generates certificate files for iam service, the
 # certificate files will save in $1 directory.
@@ -21,7 +21,7 @@ readonly CERT_HOSTNAME="${CERT_HOSTNAME:-iam.api.marmotedu.com,iam.authz.marmote
 # Args:
 #   $1 (the directory that certificate files to save)
 #   $2 (the prefix of the certificate filename)
-function generate-iam-cert() {
+function generate-pigpig-cert() {
   local cert_dir=${1}
   local prefix=${2:-}
 
@@ -38,7 +38,7 @@ function generate-iam-cert() {
       "expiry": "87600h"
     },
     "profiles": {
-      "iam": {
+      "pigpig": {
         "usages": [
           "signing",
           "key encipherment",
@@ -56,7 +56,7 @@ EOF
   if [ ! -r "ca-csr.json" ]; then
     cat >ca-csr.json <<EOF
 {
-  "CN": "iam-ca",
+  "CN": "PigPig",
   "key": {
     "algo": "rsa",
     "size": 2048
@@ -64,10 +64,10 @@ EOF
   "names": [
     {
       "C": "CN",
-      "ST": "BeiJing",
-      "L": "BeiJing",
-      "O": "marmotedu",
-      "OU": "iam"
+      "ST": "ChongQing",
+      "L": "ChongQing",
+      "O": "notone",
+      "OU": "pigpig"
     }
   ],
   "ca": {
@@ -86,9 +86,9 @@ EOF
   fi
 
   echo "Generate "${prefix}" certificates..."
-  echo '{"CN":"'"${prefix}"'","hosts":[],"key":{"algo":"rsa","size":2048},"names":[{"C":"CN","ST":"BeiJing","L":"BeiJing","O":"marmotedu","OU":"'"${prefix}"'"}]}' \
+  echo '{"CN":"'"${prefix}"'","hosts":[],"key":{"algo":"rsa","size":2048},"names":[{"C":"CN","ST":"ChongQing","L":"ChongQing","O":"notone","OU":"'"${prefix}"'"}]}' \
     | ${CFSSL_BIN} gencert -hostname="${CERT_HOSTNAME},${prefix}" -ca=ca.pem -ca-key=ca-key.pem \
-    -config=ca-config.json -profile=iam - | ${CFSSLJSON_BIN} -bare "${prefix}"
+    -config=ca-config.json -profile=pigpig - | ${CFSSLJSON_BIN} -bare "${prefix}"
 
   # the popd will access `directory stack`, no `real` parameters is actually needed
   # shellcheck disable=SC2119
@@ -120,27 +120,19 @@ function create-iam-certs {
 
   iam::util::ensure-temp-dir
 
-  generate-iam-cert "${IAM_TEMP}/cfssl" ${prefix}
+  generate-iam-cert "${PIGPIG_TEMP}/cfssl" ${prefix}
 
-	pushd "${IAM_TEMP}/cfssl"
-	IAM_CA_KEY_BASE64=$(cat "ca-key.pem" | base64 | tr -d '\r\n')
-	IAM_CA_CERT_BASE64=$(cat "ca.pem" | gzip | base64 | tr -d '\r\n')
+	pushd "${PIGPIG_TEMP}/cfssl"
+	PIGPIG_CA_KEY_BASE64=$(cat "ca-key.pem" | base64 | tr -d '\r\n')
+	PIGPIG_CA_CERT_BASE64=$(cat "ca.pem" | gzip | base64 | tr -d '\r\n')
 	case "${prefix}" in
-		iam-apiserver)
-			IAM_APISERVER_KEY_BASE64=$(cat "iam-apiserver-key.pem" | base64 | tr -d '\r\n')
-			IAM_APISERVER_CERT_BASE64=$(cat "iam-apiserver.pem" | gzip | base64 | tr -d '\r\n')
-			;;
-		iam-authz-server)
-			IAM_AUTHZ_SERVER_KEY_BASE64=$(cat "iam-authz-server-key.pem" | base64 | tr -d '\r\n')
-			IAM_AUTHZ_SERVER_CERT_BASE64=$(cat "iam-authz-server.pem" | gzip | base64 | tr -d '\r\n')
-			;;
-		admin)
-			IAM_ADMIN_KEY_BASE64=$(cat "admin-key.pem" | base64 | tr -d '\r\n')
-			IAM_ADMIN_CERT_BASE64=$(cat "admin.pem" | gzip | base64 | tr -d '\r\n')
+		pigpig)
+			PIGPIG_KEY_BASE64=$(cat "PigPig.key" | base64 | tr -d '\r\n')
+			PIGPIG_CERT_BASE64=$(cat "PigPig.crt" | gzip | base64 | tr -d '\r\n')
 			;;
 		*)
 			echo "Unknow, unsupported iam certs type:: ${prefix}" >&2
-      echo "Supported type: iam-apiserver, iam-authz-server, admin" >&2
+      echo "Supported type: pigpig" >&2
 			exit 2
 	esac
 	popd
