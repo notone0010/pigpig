@@ -5,7 +5,7 @@
 
 代码架构是通过 来源于极客时间专栏 **《[Go 语言项目开发实战](https://time.geekbang.org/column/intro/100079601?tab=intro)》**
 
-项目中很多基础代码都是通过该专栏习得
+***特此申明：*** 项目中很多基础代码都是通过该专栏习得，部分直接引用。
 
 Github地址: https://github.com/notone0010/pigpig
 
@@ -55,4 +55,4 @@ $ make
 
 [Documentation](docs)
 
-# ***该项目未经授权不可商用***
+[comment]: <> (# ***未经授权不可商用***)
