@@ -2,8 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// consistenthash
-package LB
+package lb
 
 import (
 	"hash/crc32"
@@ -11,9 +10,10 @@ import (
 	"strconv"
 )
 
+// Hash func significant.
 type Hash func(data []byte) uint32
 
-// Hash环
+// Map hash map struct.
 type Map struct {
 	hash     Hash
 	replicas int
@@ -21,6 +21,7 @@ type Map struct {
 	hashMap  map[int]string // mapping truly node
 }
 
+// New returns a new hash map.
 func New(replicas int, fn Hash) *Map {
 	m := &Map{
 		replicas: replicas,
@@ -30,9 +31,11 @@ func New(replicas int, fn Hash) *Map {
 	if m.hash == nil {
 		m.hash = crc32.ChecksumIEEE
 	}
+
 	return m
 }
 
+// Add add keys to consistent hash map.
 func (m *Map) Add(keys ...string) {
 	for _, key := range keys {
 		for i := 0; i < m.replicas; i++ {
@@ -44,6 +47,7 @@ func (m *Map) Add(keys ...string) {
 	sort.Ints(m.keys)
 }
 
+// Get returns hash node if key is exist.
 func (m *Map) Get(key string) string {
 	if len(m.keys) == 0 {
 		return ""

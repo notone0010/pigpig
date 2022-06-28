@@ -20,16 +20,22 @@ type Field = zapcore.Field
 type Level = zapcore.Level
 
 var (
+	// DebugLevel .
 	DebugLevel = zapcore.DebugLevel
 
+	// InfoLevel .
 	InfoLevel = zapcore.InfoLevel
 
+	// WarnLevel .
 	WarnLevel = zapcore.WarnLevel
 
+	// ErrorLevel .
 	ErrorLevel = zapcore.ErrorLevel
 
+	// PanicLevel .
 	PanicLevel = zapcore.PanicLevel
 
+	// FatalLevel .
 	FatalLevel = zapcore.FatalLevel
 
 	minLevel = DebugLevel

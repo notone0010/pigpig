@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// proxy
 package proxy
 
 import (
@@ -13,7 +12,7 @@ import (
 	"time"
 )
 
-// ConnectHandler deal with http-request that method is 'connect'
+// ConnectHandler deal with http-request that method is 'connect'.
 func (p *ProxyController) ConnectHandler(w http.ResponseWriter, r *http.Request, targetHttps string) {
 	// 1.将http method is connect 的请求发送到远端https服务器
 	// 2.接收响应并转发给客户端

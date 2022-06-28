@@ -28,6 +28,7 @@ import (
 	"github.com/marmotedu/component-base/pkg/version"
 )
 
+// RedisKeyPrefix redis keys uniform prefix.
 const RedisKeyPrefix = "pigpig-service-discover-"
 
 // GenericProxyServer contains state for an iam api server.
@@ -217,7 +218,10 @@ func (s *GenericProxyServer) Run() error {
 	if err := s.GetMachineId(); err != nil {
 		log.Fatal(err.Error())
 	}
-	s.setupCluster()
+
+	if s.Cluster.Enable {
+		s.setupCluster()
+	}
 
 	if err := eg.Wait(); err != nil {
 		log.Fatal(err.Error())
@@ -235,33 +239,32 @@ func (s *GenericProxyServer) setupCluster() {
 	}
 	s.DistributedNode = distributedNode
 
-	if s.Cluster.Enable {
-		if s.Cluster.Role == "master" {
+	if s.Cluster.Role == "master" {
+		s.Cluster.ClusterId = s.DistributedNode.Generate().String()
 
-			s.Cluster.ClusterId = s.DistributedNode.Generate().String()
-
-			if err := discover.Client().Info().Put(ctx, s.Cluster.Name, s.Cluster.ClusterId); err != nil {
-				log.Fatalf("the server failed to put cluster master`s information into etcd err: %s", err.Error())
-			}
-			log.Infof("the server successfully put cluster master`s information into etcd cluster id: %s", s.Cluster.ClusterId)
-
-			if err := discover.Client().Discover().DiscoverStart(ctx, "register/"+s.Cluster.ClusterId); err != nil {
-				log.Fatal(err.Error())
-			}
-			log.Infof("the server successfully watch %s", s.Cluster.Name)
-			// master will sleep 1 second so that the service-register can put into etcd successful
-			time.Sleep(2 * time.Second)
+		if err := discover.Client().Info().Put(ctx, s.Cluster.Name, s.Cluster.ClusterId); err != nil {
+			log.Fatalf("the server failed to put cluster master`s information into etcd err: %s", err.Error())
 		}
+		log.Infof("the server successfully put cluster master`s information into etcd cluster id: %s", s.Cluster.ClusterId)
+
+		if err := discover.Client().Discover().DiscoverStart(ctx, "register/"+s.Cluster.ClusterId); err != nil {
+			log.Fatal(err.Error())
+		}
+		log.Infof("the server successfully watch %s", s.Cluster.Name)
+		// master will sleep 1 second so that the service-register can put into etcd successful
+		time.Sleep(2 * time.Second)
 	}
-	if s.Cluster.Enable && (s.Cluster.IsMasterHandle || s.Cluster.Role == "slave") {
-		// initial current node information into etcd
-		if s.Cluster.ClusterId == "" {
-			clusterId, err := discover.Client().Info().Get(ctx, s.Cluster.Name)
-			if err != nil {
-				log.Fatalf("failed to join %s cluster error: %s", s.Cluster.Name, err.Error())
-			}
-			s.Cluster.ClusterId = string(clusterId)
+
+	if s.Cluster.ClusterId == "" {
+		clusterId, err := discover.Client().Info().Get(ctx, s.Cluster.Name)
+		if err != nil {
+			log.Fatalf("failed to join %s cluster error: %s", s.Cluster.Name, err.Error())
 		}
+		s.Cluster.ClusterId = string(clusterId)
+	}
+
+	if s.Cluster.IsMasterHandle || s.Cluster.Role == "slave" {
+		// initial current node information into etcd
 
 		s.httpAddress = net.JoinHostPort(s.LocalNetIFAddr, strconv.Itoa(s.InsecureServingInfo.BindPort))
 
@@ -275,6 +278,7 @@ func (s *GenericProxyServer) setupCluster() {
 		}
 		log.Infof("the current register into etcd successful")
 	}
+
 	log.Infof("server initial the cluster is success")
 }
 
@@ -331,6 +335,7 @@ func (s *GenericProxyServer) ping(ctx context.Context) error {
 	// return fmt.Errorf("the router has no response, or it might took too long to start up")
 }
 
+// GetMachineId get current server machine id.
 func (s *GenericProxyServer) GetMachineId() error {
 	redisStorage := storage.RedisCluster{KeyPrefix: RedisKeyPrefix}
 
@@ -341,10 +346,12 @@ func (s *GenericProxyServer) GetMachineId() error {
 		if value != 0 {
 			s.MachineId = value
 			log.Infof("redis key: increase-machine-id ---> %v", value)
+
 			return nil
 		}
 		log.Debugf("be failed to connect redis is trying to retry")
 		time.Sleep(1 * time.Second)
 	}
+
 	return errors.New("failed to get machine id")
 }

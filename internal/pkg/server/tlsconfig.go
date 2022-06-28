@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// server
 package server
 
 import (
@@ -24,6 +23,7 @@ import (
 	"github.com/notone/pigpig/pkg/util/fileutil"
 )
 
+// CertsCache certificate cache.
 type CertsCache struct {
 	CacheMap map[string]*tls.Certificate
 	RootCa   CertKey
@@ -32,6 +32,7 @@ type CertsCache struct {
 
 var certsCache CertsCache
 
+// GetCertificate defines tls.GetCertificate operation.
 func GetCertificate(clientHello *tls.ClientHelloInfo) (*tls.Certificate, error) {
 	log.Debugf("ready to load %s certificate", clientHello.ServerName)
 	hostName := clientHello.ServerName
@@ -47,31 +48,48 @@ func GetCertificate(clientHello *tls.ClientHelloInfo) (*tls.Certificate, error) 
 	}
 	if certs, exist := certsCache.CacheMap[hostName]; exist {
 		log.Debugf("loaded %s certificate successful", clientHello.ServerName)
+
 		return certs, nil
 	}
+
 	certPath := strings.Replace(rootCA.CertFile, "PigPig", hostName, 1)
 	privateKeyPath := strings.Replace(rootCA.KeyFile, "PigPig", hostName, 1)
 
 	loadCert, err := LoadCertificate(clientHello.ServerName, certPath, privateKeyPath)
 	if err == nil && loadCert != nil {
 		certsCache.CacheMap[hostName] = loadCert
+
 		return loadCert, nil
 	}
-	defaultCert, err := tls.LoadX509KeyPair(rootCA.CertFile, rootCA.KeyFile)
 
-	generateCert, err := GenerateCertsForHostname(hostName, &defaultCert, certPath, privateKeyPath)
+	var (
+		defaultCert  tls.Certificate
+		generateCert *tls.Certificate
+	)
+
+	defaultCert, err = tls.LoadX509KeyPair(rootCA.CertFile, rootCA.KeyFile)
+	if err != nil {
+		log.Errorf("failed to load default certificate detail: %s", err.Error())
+
+		return nil, err
+	}
+
+	generateCert, err = GenerateCertsForHostname(hostName, &defaultCert, certPath, privateKeyPath)
 	if err == nil {
 		certsCache.CacheMap[hostName] = generateCert
-		return generateCert, err
+
+		return generateCert, nil
 	}
 
 	log.Errorf("failed load certificate and key all ---> domain: %s", hostName)
+
 	return nil, err
 }
 
-// GetTlsConfig initialize tlsconfig must provided a rootCA by the calls
+// GetTlsConfig initialize tlsconfig must provided a rootCA by the calls.
 func GetTlsConfig(rootCA CertKey) *tls.Config {
 	certsCache.RootCa = rootCA
+
 	return &tls.Config{
 		GetCertificate:     GetCertificate,
 		InsecureSkipVerify: true,
@@ -80,6 +98,7 @@ func GetTlsConfig(rootCA CertKey) *tls.Config {
 	}
 }
 
+// GenerateCertsForHostname base on hostname, root CA, certPath and privateKeyPath return tls.Certificate.
 func GenerateCertsForHostname(host string, rootCA *tls.Certificate, certPath, privateKeyPath string) (*tls.Certificate, error) {
 	max := new(big.Int).Lsh(big.NewInt(1), 128)
 	serialNumber, _ := rand.Int(rand.Reader, max)
@@ -124,35 +143,41 @@ func GenerateCertsForHostname(host string, rootCA *tls.Certificate, certPath, pr
 	certs, err := tls.X509KeyPair(certBuffer.Bytes(), keyBuffer.Bytes())
 	if err != nil {
 		log.Errorf("found an error when generate certificate and key for %s ----> error: %s", host, err.Error())
+
 		return nil, err
 	}
 
 	return &certs, nil
 }
 
+// LoadCertificate according to host, cert-path and private-key-path then return tls.Certificate.
 func LoadCertificate(host, certPath, privkeyPath string) (*tls.Certificate, error) {
 	// TODO handle race condition (ask Matt)
 	// the transaction is idempotent, however, so it shouldn't matter
 	exist, _ := fileutil.FileExists(certPath)
 	if !exist {
 		log.Warn("failed to load certificate or key file")
+
 		return nil, errors.New("failed to load certificate or key file")
 	}
 	exist, _ = fileutil.FileExists(privkeyPath)
 	if !exist {
 		log.Errorf("failed to load certificate or key file")
+
 		return nil, errors.New("failed to load certificate or key file")
 	}
 
 	cert, err := tls.LoadX509KeyPair(certPath, privkeyPath)
 	if err != nil {
 		log.Debugf("load %s certificate successfully", host)
-		return &cert, nil
-	}
-	return nil, err
 
+		return &cert, err
+	}
+
+	return nil, err
 }
 
+// GetSubject base on hostname return certificate subject.
 func GetSubject(host string) pkix.Name {
 	subject := pkix.Name{
 		Country:            []string{"CN"},
@@ -163,5 +188,6 @@ func GetSubject(host string) pkix.Name {
 		Province:   []string{"SiChuan"},
 		CommonName: host,
 	}
+
 	return subject
 }

@@ -2,15 +2,14 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// options
 package options
 
 import (
 	"github.com/notone/pigpig/internal/pkg/server"
 )
 
+// ProxyHandlerOptions proxy handler options.
 type ProxyHandlerOptions struct {
-
 	// ForceProxyHttps will enable that deal with https stream
 	ForceProxyHttps bool
 
@@ -33,5 +32,6 @@ func (s *ProxyHandlerOptions) NewProxyHandlerOptions() *ProxyHandlerOptions {
 func (s *ProxyHandlerOptions) ApplyTo(c *server.Config) error {
 	s.HttpServerOptions = c.InsecureServing
 	s.HttpsServerOptions = c.SecureServing
+
 	return nil
 }

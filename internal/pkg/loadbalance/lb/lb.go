@@ -2,22 +2,22 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// LB
-package LB
+package lb
 
-type LBType string
+// LB load balance object.
+type LB struct{}
 
-type LB struct {
-}
-
+// NewLB return new load balance object.
 func NewLB() LB {
 	return LB{}
 }
 
+// Shuffle returns shuffle algorithm.
 func (l *LB) Shuffle() *Shuffle {
 	return &Shuffle{}
 }
 
+// RR returns rr algorithm.
 func (l *LB) RR() *RR {
 	return &RR{}
 }

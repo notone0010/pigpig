@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // server
-package generateCA
+package generateca
 
 import (
 	"testing"

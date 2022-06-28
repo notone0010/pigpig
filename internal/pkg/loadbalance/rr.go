@@ -2,9 +2,9 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// loadbalance
 package loadbalance
 
+// RRLB rr algorithm interface.
 type RRLB interface {
 	SwitchTo(indexes []int) (int, error)
 }

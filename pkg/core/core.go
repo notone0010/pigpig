@@ -5,13 +5,14 @@
 package core
 
 import (
+	"encoding/json"
 	"net/http"
 
-	"encoding/json"
 	"github.com/marmotedu/errors"
 	"github.com/marmotedu/log"
 )
 
+// RawHttpHandler raw http handler.
 type RawHttpHandler func(w http.ResponseWriter, r *http.Request)
 
 // ErrResponse defines the return messages when an error occurred.
@@ -44,15 +45,15 @@ func WriteResponse(w http.ResponseWriter, r *http.Request, err error, data inter
 		})
 		w.WriteHeader(coder.HTTPStatus())
 		_, _ = w.Write(msg)
+
 		return
 	}
-	if data != nil{
+	if data != nil {
 		msg, _ = json.Marshal(data)
 	}
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(msg)
 }
-
 
 // func GetErrorResponse(w http.ResponseWriter, r *http.Request, err error, data interface{}) {
 // 	var msg []byte

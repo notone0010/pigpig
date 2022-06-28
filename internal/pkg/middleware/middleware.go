@@ -12,6 +12,7 @@ import (
 	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
 )
 
+// Middleware middleware significant.
 type Middleware func(http.Handler) http.Handler
 
 // Middlewares transport registered middlewares.

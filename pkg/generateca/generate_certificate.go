@@ -2,8 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// generateCA
-package generateCA
+package generateca
 
 import (
 	"crypto/rand"
@@ -18,6 +17,7 @@ import (
 	"time"
 )
 
+// CertInformation certificate information.
 type CertInformation struct {
 	Country            []string
 	Organization       []string
@@ -53,6 +53,7 @@ func newCertificate(info CertInformation) *x509.Certificate {
 	}
 }
 
+// CreateCRT create certificate and key pair.
 func CreateCRT(RootCa *x509.Certificate, RootKey *rsa.PrivateKey, info CertInformation) error {
 	Crt := newCertificate(info)
 	Key, err := rsa.GenerateKey(rand.Reader, 2048)
@@ -79,43 +80,55 @@ func CreateCRT(RootCa *x509.Certificate, RootKey *rsa.PrivateKey, info CertInfor
 	}
 
 	buf = x509.MarshalPKCS1PrivateKey(Key)
+
 	return write(info.KeyName, "PRIVATE KEY", buf)
 }
 
 func write(filename, Type string, p []byte) error {
 	File, err := os.Create(filename)
-	defer File.Close()
+	// defer File.Close()
 	if err != nil {
 		return err
 	}
-	var b = &pem.Block{Bytes: p, Type: Type}
+	b := &pem.Block{Bytes: p, Type: Type}
+
+	_ = File.Close()
+
 	return pem.Encode(File, b)
 }
 
+// Parse parse ssl certificate and key.
 func Parse(crtPath, keyPath string) (rootcertificate *x509.Certificate, rootPrivateKey *rsa.PrivateKey, err error) {
 	rootcertificate, err = ParseCrt(crtPath)
 	if err != nil {
 		return
 	}
 	rootPrivateKey, err = ParseKey(keyPath)
+
 	return
 }
 
+// ParseCrt parse ssl certificate.
 func ParseCrt(path string) (*x509.Certificate, error) {
+	var p *pem.Block
+
 	buf, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	p := &pem.Block{}
-	p, buf = pem.Decode(buf)
+	p, _ = pem.Decode(buf)
+
 	return x509.ParseCertificate(p.Bytes)
 }
 
+// ParseKey parse ssl key.
 func ParseKey(path string) (*rsa.PrivateKey, error) {
+	var p *pem.Block
 	buf, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-	p, buf := pem.Decode(buf)
+	p, _ = pem.Decode(buf)
+
 	return x509.ParsePKCS1PrivateKey(p.Bytes)
 }

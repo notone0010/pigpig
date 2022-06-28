@@ -58,15 +58,14 @@ func addConfigFlag(basename string, fs *pflag.FlagSet) {
 }
 
 func printConfig() {
-	keys := viper.AllKeys()
-	if len(keys) > 0 {
+	if len(viper.AllKeys()) > 0 {
 		fmt.Printf("%v Configuration items:\n", progressMessage)
 		table := uitable.New()
 		table.Separator = " "
 		table.MaxColWidth = 80
 		table.RightAlign(0)
-		for _, k := range keys {
-			table.AddRow(fmt.Sprintf("%s:", k), viper.Get(k))
+		for _, key := range viper.AllKeys() {
+			table.AddRow(fmt.Sprintf("%s:", key), viper.Get(key))
 		}
 		fmt.Printf("%v", table)
 	}

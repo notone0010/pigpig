@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// proxy
 package proxy
 
 import (
@@ -18,17 +17,18 @@ import (
 	srvv1 "github.com/notone/pigpig/internal/pigpig/service/v1"
 	"github.com/notone/pigpig/internal/pigpig/transport"
 	"github.com/notone/pigpig/internal/pkg/loadbalance"
-	"github.com/notone/pigpig/internal/pkg/loadbalance/LB"
+	"github.com/notone/pigpig/internal/pkg/loadbalance/lb"
 	"github.com/notone/pigpig/pkg/core"
 	"github.com/notone/pigpig/pkg/log"
 )
 
+// ProxyController ...
 type ProxyController struct {
 	srv srvv1.Service
 
 	engine *dudu.ProxyHttpMux
 
-	Lb LB.LB
+	Lb lb.LB
 
 	InsecureServingBindPort int
 	SecureServingBindPort   int
@@ -43,8 +43,6 @@ type ProxyController struct {
 	// userPool
 	userPool sync.Pool
 
-	counter int
-
 	mu sync.Mutex
 
 	once sync.Once
@@ -53,7 +51,7 @@ type ProxyController struct {
 // NewUserController creates a user handler.
 func NewUserController(engine *dudu.ProxyHttpMux,
 	transport transport.Factory,
-	lb LB.LB,
+	lb lb.LB,
 ) *ProxyController {
 	controller := &ProxyController{
 		engine: engine,
@@ -66,9 +64,8 @@ func NewUserController(engine *dudu.ProxyHttpMux,
 	return controller
 }
 
-// ChooseHandler select handler by http method
+// ServeHandle select handler by http method.
 func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
-
 	// p.handlerComplete()
 
 	if r.Header.Get(dudu.InternalHeaderFullPath) == "" {
@@ -116,26 +113,24 @@ func (p *ProxyController) ServeHandle(w http.ResponseWriter, r *http.Request) {
 			log.Debugf("Moved to %s method: CONNECT host: %s ", r.Host, targetHost)
 			p.ConnectHandler(w, r, targetHost)
 			return
-		} else {
-			if targetHost == net.JoinHostPort(p.LocalNetIFAddr, strconv.Itoa(p.InsecureServingBindPort)) {
-				p.GoHandle(w, r)
-				return
-			}
-
-			targetURL := dudu.HttpPrefix + targetHost
-
-			reverseFunc := GoReverseProxy(targetURL)
-			if reverseFunc == nil {
-				reverseErr := errors.New("failed to get reverse proxy function")
-				core.WriteResponse(w, r, reverseErr, nil)
-				return
-			}
-			log.Debugf("Moved to %s method: %s host: %s ", r.Method, r.Host, targetHost)
-
-			reverseFunc(w, r)
+		}
+		if targetHost == net.JoinHostPort(p.LocalNetIFAddr, strconv.Itoa(p.InsecureServingBindPort)) {
+			p.GoHandle(w, r)
 			return
 		}
 
+		targetURL := dudu.HttpPrefix + targetHost
+
+		reverseFunc := GoReverseProxy(targetURL)
+		if reverseFunc == nil {
+			reverseErr := errors.New("failed to get reverse proxy function")
+			core.WriteResponse(w, r, reverseErr, nil)
+			return
+		}
+		log.Debugf("Moved to %s method: %s host: %s ", r.Method, r.Host, targetHost)
+
+		reverseFunc(w, r)
+		return
 	}
 	p.GoHandle(w, r)
 }
@@ -144,6 +139,7 @@ func (p *ProxyController) allocateContext() *dudu.Context {
 	return dudu.NewContext(p.engine)
 }
 
+// GoHandle start handle request and go fetch remote.
 func (p *ProxyController) GoHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodConnect {
 		log.Infof("client: %s | received https CONNECT request %s", r.RemoteAddr, r.Host)
@@ -158,6 +154,7 @@ func (p *ProxyController) GoHandle(w http.ResponseWriter, r *http.Request) {
 	p.userPool.Put(c)
 }
 
+// Use append middleware into porxy controller.
 func (p *ProxyController) Use(plugins ...dudu.HandlerFunc) {
 	p.Plugins = append(p.Plugins, plugins...)
 }

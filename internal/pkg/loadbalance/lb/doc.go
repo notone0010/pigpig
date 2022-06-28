@@ -2,4 +2,4 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package LB // import "github.com/marmotedu/iam/internal/pkg/loadbalance/LB"
+package lb // import "github.com/marmotedu/iam/internal/pkg/loadbalance/lb"

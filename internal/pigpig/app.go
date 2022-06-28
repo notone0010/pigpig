@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// pigpig
 package pigpig
 
 import (
@@ -12,12 +11,13 @@ import (
 	"github.com/notone/pigpig/pkg/log"
 )
 
-const commandDesc = `The IAM API server validates and configures data
-for the api objects which include users, policies, secrets, and
-others. The API Server services REST operations to do the api objects management.
+const commandDesc = `The PigPig is a distributed proxy server and it
+send your request to what you request data, the PigPig support service
+automatic register and discover, internal load balance, and plugins
+handles the request traffic.
 
 Find more pigpig information at:
-    https://github.com/marmotedu/iam/blob/master/docs/guide/en-US/cmd/pigpig.md`
+    https://github.com/AIpha00/pigpig/tree/master/docs/guide/zh-CN/pigpig.md`
 
 // NewApp creates an App object with default parameters.
 func NewApp(basename string) *app.App {

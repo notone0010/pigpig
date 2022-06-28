@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// middleware
 package middleware
 
 import (
@@ -14,6 +13,7 @@ import (
 	"github.com/notone/pigpig/pkg/log"
 )
 
+// Recovery when the server is processing panic occurred will avoid process abort.
 func Recovery() v1.HandlerFunc {
 	return func(c *v1.Context) {
 		defer func() {
@@ -32,7 +32,7 @@ func Recovery() v1.HandlerFunc {
 
 				log.Errorf("[Recovery] %s panic recovered:\n%s\n%s", timeFormat(time.Now()), err, headersToStr)
 				// If the connection is dead, we can't write a status to it.
-				c.Errors = append(c.Errors, err.(error)) // nolint: errcheck
+				c.Errors = append(c.Errors, err.(error))
 				c.Abort()
 			}
 		}()

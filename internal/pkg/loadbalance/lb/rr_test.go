@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // LB
-package LB
+package lb
 
 import (
 	"fmt"

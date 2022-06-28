@@ -2,10 +2,9 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// plugin
 package dudu
 
-// Plugin 代理平台处理请求插件
+// Plugin 代理平台处理请求插件.
 type Plugin interface {
 	// BeforeSendRequest will handle a request before send the request
 	BeforeSendRequest(c *Context)
@@ -17,9 +16,7 @@ type Plugin interface {
 	// OnConnectError()
 }
 
-
-
-
+// ModifyError modify error response when the server encounter error.
 type ModifyError func(request *RequestDetail, err error) *ResponseDetail
 
 //

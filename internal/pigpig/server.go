@@ -14,7 +14,7 @@ import (
 	"github.com/notone/pigpig/internal/pigpig/discover"
 	"github.com/notone/pigpig/internal/pigpig/discover/etcd"
 
-	// "github.com/notone/pigpig/internal/pigpig/transport"
+	// "github.com/notone/pigpig/internal/pigpig/transport".
 	genericoptions "github.com/notone/pigpig/internal/pkg/options"
 	genericproxyserver "github.com/notone/pigpig/internal/pkg/server"
 	"github.com/notone/pigpig/pkg/log"
@@ -28,7 +28,6 @@ type proxyServer struct {
 	redisOptions       *genericoptions.RedisOptions
 	genericProxyServer *genericproxyserver.GenericProxyServer
 }
-
 
 type preparedProxyServer struct {
 	*proxyServer
@@ -48,43 +47,36 @@ func createProxyServer(cfg *config.Config) (*proxyServer, error) {
 
 	if cfg.GenericServerRunOptions.Cluster.Enable && cfg.GenericServerRunOptions.Cluster.Role == "" {
 		err := fmt.Errorf("config`s 'server.cluster' must contain role as 'server.cluster.enable' is ture")
+
 		return nil, errors.New(err.Error())
 	}
-	if cfg.GenericServerRunOptions.Cluster.Enable{
-
+	if cfg.GenericServerRunOptions.Cluster.Enable {
 		discoverIns, err := etcd.GetEtcdFactoryOr(cfg.EtcdOptions, func() {
-
 			instance, err := etcd.GetEtcdFactoryOr(nil, nil)
 			if err != nil {
 				log.Errorf("etcd on keepalive failure function found an error %s", err.Error())
+
 				return
 			}
 			err = instance.Register().RestartSession()
 			if err != nil {
 				log.Errorf("etcd failed to restart session error ---> %s", err.Error())
-
 			}
 			log.Infof("etcd restart session successful")
 
 			for i := 1; i <= 5; i++ {
-
 				err := instance.Register().RecoveryServiceRegister(context.TODO())
 				if err == nil {
 					return
-
-				} else {
-					log.Errorf(err.Error())
 				}
-
+				log.Errorf(err.Error())
 				time.Sleep(1 * time.Second)
 			}
-
 		})
 		if err != nil {
 			return nil, err
 		}
 		discover.SetClient(discoverIns)
-
 	}
 	genericConfig, err := buildGenericConfig(cfg)
 	if err != nil {
@@ -101,6 +93,7 @@ func createProxyServer(cfg *config.Config) (*proxyServer, error) {
 		redisOptions:       cfg.RedisOptions,
 		genericProxyServer: genericServer,
 	}
+
 	return server, nil
 }
 
@@ -116,6 +109,7 @@ func (s *proxyServer) PrepareRun() preparedProxyServer {
 		if etcdIns != nil {
 			_ = etcdIns.Close()
 		}
+
 		return nil
 	}))
 
@@ -162,8 +156,6 @@ func buildGenericConfig(cfg *config.Config) (genericConfig *genericproxyserver.C
 
 	return
 }
-
-// nolint: unparam
 
 func (s *proxyServer) initRedisStore() {
 	ctx, cancel := context.WithCancel(context.Background())

@@ -2,8 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// LB
-package LB
+package lb
 
 import (
 	"math/rand"
@@ -20,14 +19,17 @@ func shuffle(n int) []int {
 	return rand.Perm(n)
 }
 
+// Shuffle object.
 type Shuffle struct {
 	// you can set some options
 }
 
+// SwitchTo returns next.
 func (s *Shuffle) SwitchTo(indexSize int) (int, error) {
 	if indexSize <= 1 {
 		return indexSize, nil
 	}
 	_indexes := shuffle(indexSize)
+
 	return _indexes[0], nil
 }

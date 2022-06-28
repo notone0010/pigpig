@@ -2,9 +2,9 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-// dudu
 package dudu
 
+// Role ...
 type Role string
 
 // HandlerFunc defines the handler used by middleware as return value.
@@ -13,7 +13,7 @@ type HandlerFunc func(c *Context)
 // HandlersChain defines a HandlerFunc array.
 type HandlersChain []HandlerFunc
 
-// HandlerErrorFunc defines the handler used by error as return response
+// HandlerErrorFunc defines the handler used by error as return response.
 type HandlerErrorFunc func(c *Context, errors []error)
 
 // Last returns the last handler in the chain. ie. the last handler is the main one.

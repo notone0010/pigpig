@@ -35,6 +35,7 @@ func RequestID() v1.HandlerFunc {
 				log.Errorf("%s failed to generate", XRequestIDKey)
 				c.Errors = append(c.Errors, err)
 				c.Abort()
+
 				return
 			}
 			rid = node.Node.Generate().String()
