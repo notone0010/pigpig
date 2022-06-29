@@ -1,6 +1,23 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Chore
+- **.gitignore:** update
+- **.gitignore:** update
+- **README.md:** updated README.md
+- **go.sum:** go.sum
+
+### Docs
+- **README.md:** update README.md
+- **README.md:** update README.md
+- **README.md:** update README.md
+- **README.md:** update README.md
+- **README.md:** update README.md
+- **README.md TODO.md :** readme update
+
+### Feat
+- **docker-compose.yaml:** updated docker image
+
 
 <a name="v1.0.1"></a>
 ## [v1.0.1] - 2022-06-28
