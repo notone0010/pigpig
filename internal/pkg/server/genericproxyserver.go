@@ -17,6 +17,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/notone0010/pigpig/internal/pigpig/discover"
 	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pkg/plugins"
 	"github.com/notone0010/pigpig/pkg/core"
 	"github.com/notone0010/pigpig/pkg/storage"
 	"github.com/notone0010/pigpig/pkg/util/infoutil"
@@ -40,6 +41,8 @@ type GenericProxyServer struct {
 
 	// InsecureServingInfo holds configuration of the insecure HTTP server.
 	InsecureServingInfo *InsecureServingInfo
+
+	plugins []string
 
 	// ShutdownTimeout is the timeout used for server shutdown. This specifies the timeout before server
 	// gracefully shutdown returns.
@@ -72,6 +75,7 @@ func initGenericProxyServer(s *GenericProxyServer) {
 	s.Setup()
 	s.InstallMiddlewares()
 	s.InstallAPIs()
+	s.InstallPlugins()
 }
 
 // InstallAPIs install generic apis.
@@ -138,11 +142,14 @@ func (s *GenericProxyServer) InstallMiddlewares() {
 type preparedGenericProxyServer struct {
 	*GenericProxyServer
 }
-
-func (s *GenericProxyServer) PrepareRun() preparedGenericProxyServer {
-	return preparedGenericProxyServer{s}
-}
 */
+func (s *GenericProxyServer) InstallPlugins() {
+	po := plugins.NewPluginsOptions(s.plugins)
+	po.LoadPlugins()
+	if len(po.Plugins) > 0 {
+		s.Engine.Use(po.Plugins...)
+	}
+}
 
 // Run spawns the http server. It only returns when the port cannot be listened on initially.
 func (s *GenericProxyServer) Run() error {
