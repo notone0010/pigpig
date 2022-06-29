@@ -56,6 +56,16 @@ $ make
 
 构建后的二进制文件保存在 `_output/platforms/linux/amd64/` 目录下。
 
+3. 如需解析HTTPS
+
+证书生成
+```bash
+$ make gen.ca
+```
+**浏览器若使用**please trust this CA
+
+并在配置文件或者命令行指定证书地址
+
 ### 使用指南&&参数详解
 
 [Documentation](docs)
