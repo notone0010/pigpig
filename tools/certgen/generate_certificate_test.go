@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 // server
-package generateca
+package main
 
 import (
 	"testing"
@@ -20,8 +20,8 @@ func Test_crt(t *testing.T) {
 		Locality:   []string{"ChengDu"},
 		Province:   []string{"SiChuan"},
 		CommonName: "PigPig",
-		CrtName:    "/Users/lvsongke/workspace/go/golang/src/github.com/notone0010/pigpig/configs/cert/PigPig.crt",
-		KeyName:    "/Users/lvsongke/workspace/go/golang/src/github.com/notone0010/pigpig/configs/cert/PigPig.key",
+		CrtName:    "/Users/lvsongke/workspace/go/golang/src/github.com/notone0010/pigpig/configs/cert/pigpig.pem",
+		KeyName:    "/Users/lvsongke/workspace/go/golang/src/github.com/notone0010/pigpig/configs/cert/pigpig-key.pem",
 	}
 
 	err := CreateCRT(nil, nil, baseinfo)

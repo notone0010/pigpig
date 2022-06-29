@@ -28,7 +28,7 @@ gen.errcode.doc: tools.verify.codegen
 gen.ca.%:
 	$(eval CA := $(word 1,$(subst ., ,$*)))
 	@echo "===========> Generating CA files for $(CA)"
-	@${ROOT_DIR}/scripts/gencerts.sh generate-pigpig-cert $(OUTPUT_DIR)/cert $(CA)
+	@certgen
 
 .PHONY: gen.ca
 gen.ca: $(addprefix gen.ca., $(CERTIFICATES))

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package generateca
+package main
 
 import (
 	"crypto/rand"
@@ -11,6 +11,7 @@ import (
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"io/ioutil"
+	"log"
 	"math/big"
 	rd "math/rand"
 	"os"
@@ -92,7 +93,7 @@ func write(filename, Type string, p []byte) error {
 	}
 	b := &pem.Block{Bytes: p, Type: Type}
 
-	_ = File.Close()
+	defer File.Close()
 
 	return pem.Encode(File, b)
 }
@@ -131,4 +132,27 @@ func ParseKey(path string) (*rsa.PrivateKey, error) {
 	p, _ = pem.Decode(buf)
 
 	return x509.ParsePKCS1PrivateKey(p.Bytes)
+}
+
+func main() {
+	baseinfo := CertInformation{
+		Country:            []string{"CN"},
+		Organization:       []string{"PP"},
+		IsCA:               true,
+		OrganizationalUnit: []string{"PigPig"},
+		EmailAddress:       []string{"aiphalv0@163.com"},
+
+		Locality:   []string{"ChengDu"},
+		Province:   []string{"SiChuan"},
+		CommonName: "PigPig",
+		CrtName:    "./configs/cert/pigpig.pem",
+		KeyName:    "./configs/cert/pigpig-key.pem",
+	}
+
+	err := CreateCRT(nil, nil, baseinfo)
+	if err != nil {
+		log.Printf("Create crt error,Error info: %s", err.Error())
+		return
+	}
+	log.Printf("Create crt success file -> certificate: %s, key: %s", baseinfo.CrtName, baseinfo.KeyName)
 }

@@ -14,6 +14,7 @@ import (
 	"encoding/pem"
 	"math/big"
 	"os"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -52,8 +53,22 @@ func GetCertificate(clientHello *tls.ClientHelloInfo) (*tls.Certificate, error) 
 		return certs, nil
 	}
 
-	certPath := strings.Replace(rootCA.CertFile, "PigPig", hostName, 1)
-	privateKeyPath := strings.Replace(rootCA.KeyFile, "PigPig", hostName, 1)
+	certRegexp, err := regexp.Compile("^[A-Za-z_-]")
+	if err != nil {
+		return nil, err
+	}
+
+	certStr := strings.Split(rootCA.CertFile, "/")
+	keyStr := strings.Split(rootCA.KeyFile, "/")
+
+	certName := certRegexp.ReplaceAllString(certStr[len(certStr)-1], hostName)
+	certPath := strings.Join(certStr[:len(certStr)-1], "/") + "/" + certName
+
+	keyName := certRegexp.ReplaceAllString(keyStr[len(keyStr)-1], hostName)
+	privateKeyPath := strings.Join(certStr[:len(certStr)-1], "/") + "/" + keyName
+
+	// certPath := strings.Replace(rootCA.CertFile, "PigPig", hostName, 1)
+	// privateKeyPath := strings.Replace(rootCA.KeyFile, "PigPig", hostName, 1)
 
 	loadCert, err := LoadCertificate(clientHello.ServerName, certPath, privateKeyPath)
 	if err == nil && loadCert != nil {

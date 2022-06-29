@@ -56,7 +56,7 @@ EOF
   if [ ! -r "ca-csr.json" ]; then
     cat >ca-csr.json <<EOF
 {
-  "CN": "PigPig",
+  "CN": "root",
   "key": {
     "algo": "rsa",
     "size": 2048
@@ -127,8 +127,8 @@ function create-iam-certs {
 	PIGPIG_CA_CERT_BASE64=$(cat "ca.pem" | gzip | base64 | tr -d '\r\n')
 	case "${prefix}" in
 		pigpig)
-			PIGPIG_KEY_BASE64=$(cat "PigPig.key" | base64 | tr -d '\r\n')
-			PIGPIG_CERT_BASE64=$(cat "PigPig.crt" | gzip | base64 | tr -d '\r\n')
+			PIGPIG_KEY_BASE64=$(cat "pigpig.pem" | base64 | tr -d '\r\n')
+			PIGPIG_CERT_BASE64=$(cat "pigpig.pem" | gzip | base64 | tr -d '\r\n')
 			;;
 		*)
 			echo "Unknow, unsupported iam certs type:: ${prefix}" >&2
