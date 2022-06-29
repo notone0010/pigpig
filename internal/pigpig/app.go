@@ -12,12 +12,12 @@ import (
 )
 
 const commandDesc = `The PigPig is a distributed proxy server and it
-send your request to what you request data, the PigPig support service
+send your request to what you require remote server, the PigPig support service
 automatic register and discover, internal load balance, and plugins
 handles the request traffic.
 
 Find more pigpig information at:
-    https://github.com/AIpha00/pigpig/tree/master/docs/guide/zh-CN/pigpig.md`
+    https://github.com/notone0010/pigpig/blob/master/README.md`
 
 // NewApp creates an App object with default parameters.
 func NewApp(basename string) *app.App {
