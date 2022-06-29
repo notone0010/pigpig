@@ -14,7 +14,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/notone/pigpig/pkg/shutdown"
+	"github.com/notone0010/pigpig/pkg/shutdown"
 )
 
 // Name defines shutdown manager name.

@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/marmotedu/errors"
-	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
+	v1 "github.com/notone0010/pigpig/internal/pigpig/dudu"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // defaultLogFormatter is the default log format function Logger middleware uses.

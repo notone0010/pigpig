@@ -5,10 +5,10 @@
 package options
 
 import (
-	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
+	v1 "github.com/notone0010/pigpig/internal/pigpig/dudu"
 	"github.com/spf13/pflag"
 
-	"github.com/notone/pigpig/internal/pkg/server"
+	"github.com/notone0010/pigpig/internal/pkg/server"
 )
 
 // ServerRunOptions contains the options while running a generic api server.

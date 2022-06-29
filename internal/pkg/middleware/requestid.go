@@ -11,9 +11,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/marmotedu/errors"
-	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/pkg/log"
-	"github.com/notone/pigpig/pkg/util/infoutil"
+	v1 "github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/util/infoutil"
 )
 
 const (

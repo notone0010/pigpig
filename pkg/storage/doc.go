@@ -2,4 +2,4 @@
 // // Use of this source code is governed by a MIT style
 // // license that can be found in the LICENSE file.
 
-package storage // import "github.com/notone/pigpig/pkg/storage"
+package storage // import "github.com/notone0010/pigpig/pkg/storage"

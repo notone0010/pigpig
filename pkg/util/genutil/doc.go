@@ -2,4 +2,4 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package genutil // import "github.com/notone/pigpig/pkg/util/genutil"
+package genutil // import "github.com/notone0010/pigpig/pkg/util/genutil"

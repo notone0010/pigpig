@@ -4,7 +4,7 @@
 
 package pigpig
 
-import "github.com/notone/pigpig/internal/pigpig/config"
+import "github.com/notone0010/pigpig/internal/pigpig/config"
 
 // Run run a server.
 func Run(cfg *config.Config) error {
@@ -12,7 +12,6 @@ func Run(cfg *config.Config) error {
 	if err != nil {
 		return err
 	}
-
 
 	return server.PrepareRun().Run()
 }

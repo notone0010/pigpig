@@ -16,9 +16,9 @@ import (
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"google.golang.org/grpc"
 
-	"github.com/notone/pigpig/internal/pigpig/discover"
-	genericoptions "github.com/notone/pigpig/internal/pkg/options"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/discover"
+	genericoptions "github.com/notone0010/pigpig/internal/pkg/options"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // EtcdCreateEventFunc defines etcd create event function handler.

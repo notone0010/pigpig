@@ -3,4 +3,4 @@
 // license that can be found in the LICENSE file.
 
 // Package server defines the generic apiserver used by all iam platform.
-package server // import "github.com/notone/pigpig/internal/pkg/server"
+package server // import "github.com/notone0010/pigpig/internal/pkg/server"

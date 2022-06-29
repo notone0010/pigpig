@@ -11,8 +11,8 @@ import (
 	"sync"
 
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pkg/code"
-	"github.com/notone/pigpig/pkg/core"
+	"github.com/notone0010/pigpig/internal/pkg/code"
+	"github.com/notone0010/pigpig/pkg/core"
 )
 
 // ProxyHttpMux main logic.

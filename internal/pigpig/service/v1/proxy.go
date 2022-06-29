@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/internal/pigpig/transport"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pigpig/transport"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // ProxySrv proxy service interface.

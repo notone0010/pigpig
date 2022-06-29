@@ -13,9 +13,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/internal/pigpig/transport"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pigpig/transport"
+	"github.com/notone0010/pigpig/pkg/log"
 	"github.com/panjf2000/ants"
 	"github.com/valyala/fasthttp"
 )
@@ -37,7 +37,7 @@ func TestGorequest(t *testing.T) {
 			defer wg.Done()
 			requestGO(requestTransport)
 		}(&wg)
-		if counter % 100 == 0{
+		if counter%100 == 0 {
 			wg.Wait()
 		}
 		// sendWorkFast(&wg)()

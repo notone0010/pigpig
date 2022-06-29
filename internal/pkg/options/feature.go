@@ -7,7 +7,7 @@ package options
 import (
 	"github.com/spf13/pflag"
 
-	"github.com/notone/pigpig/internal/pkg/server"
+	"github.com/notone0010/pigpig/internal/pkg/server"
 )
 
 // FeatureOptions contains configuration items related to API server features.

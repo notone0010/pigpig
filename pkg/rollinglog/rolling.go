@@ -7,7 +7,7 @@ package rollinglog
 import (
 	"os"
 
-	"github.com/notone/pigpig/pkg/rollinglog/rolling"
+	"github.com/notone0010/pigpig/pkg/rollinglog/rolling"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

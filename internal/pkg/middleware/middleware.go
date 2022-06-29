@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
+	v1 "github.com/notone0010/pigpig/internal/pigpig/dudu"
 )
 
 // Middleware middleware significant.

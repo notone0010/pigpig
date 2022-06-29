@@ -9,9 +9,9 @@ import (
 	cliflag "github.com/marmotedu/component-base/pkg/cli/flag"
 	"github.com/marmotedu/component-base/pkg/json"
 
-	genericoptions "github.com/notone/pigpig/internal/pkg/options"
-	"github.com/notone/pigpig/internal/pkg/server"
-	"github.com/notone/pigpig/pkg/log"
+	genericoptions "github.com/notone0010/pigpig/internal/pkg/options"
+	"github.com/notone0010/pigpig/internal/pkg/server"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // Options runs an iam api server.

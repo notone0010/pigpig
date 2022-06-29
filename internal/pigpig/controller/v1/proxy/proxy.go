@@ -12,14 +12,14 @@ import (
 	"sync"
 
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pigpig/discover"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	srvv1 "github.com/notone/pigpig/internal/pigpig/service/v1"
-	"github.com/notone/pigpig/internal/pigpig/transport"
-	"github.com/notone/pigpig/internal/pkg/loadbalance"
-	"github.com/notone/pigpig/internal/pkg/loadbalance/lb"
-	"github.com/notone/pigpig/pkg/core"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/discover"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	srvv1 "github.com/notone0010/pigpig/internal/pigpig/service/v1"
+	"github.com/notone0010/pigpig/internal/pigpig/transport"
+	"github.com/notone0010/pigpig/internal/pkg/loadbalance"
+	"github.com/notone0010/pigpig/internal/pkg/loadbalance/lb"
+	"github.com/notone0010/pigpig/pkg/core"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // ProxyController ...

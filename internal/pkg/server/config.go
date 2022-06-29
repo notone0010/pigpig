@@ -12,11 +12,11 @@ import (
 	"time"
 
 	"github.com/marmotedu/component-base/pkg/util/homedir"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/pkg/util/infoutil"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/pkg/util/infoutil"
 	"github.com/spf13/viper"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 const (

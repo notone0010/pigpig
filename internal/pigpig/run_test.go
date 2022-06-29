@@ -7,15 +7,16 @@ package pigpig
 
 import (
 	"testing"
-	"github.com/notone/pigpig/internal/pigpig/options"
-	"github.com/notone/pigpig/internal/pigpig/config"
-	"github.com/notone/pigpig/pkg/log"
+
+	"github.com/notone0010/pigpig/internal/pigpig/config"
+	"github.com/notone0010/pigpig/internal/pigpig/options"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 func TestRun(t *testing.T) {
 	opts := options.NewOptions()
 	cfg, _ := config.CreateConfigFromOptions(opts)
-	if err := Run(cfg); err != nil{
+	if err := Run(cfg); err != nil {
 		log.Fatalf("be starting with error: %s", err.Error())
 	}
 }

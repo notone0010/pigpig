@@ -12,7 +12,7 @@ import (
 
 	"github.com/bwmarrin/snowflake"
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 func GetTransportAddr() (string, error) {

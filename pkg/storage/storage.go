@@ -18,7 +18,7 @@ import (
 	"github.com/buger/jsonparser"
 	uuid "github.com/satori/go.uuid"
 
-	"github.com/notone/pigpig/third_party/forked/murmur3"
+	"github.com/notone0010/pigpig/third_party/forked/murmur3"
 )
 
 // ErrKeyNotFound is a standard error for when a key is not found in the storage transport.

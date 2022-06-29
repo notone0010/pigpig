@@ -9,7 +9,7 @@
 DOCKER := docker
 DOCKER_SUPPORTED_API_VERSION ?= 1.32
 
-REGISTRY_PREFIX ?= 127.0.0.1:5050/notone
+REGISTRY_PREFIX ?= 127.0.0.1:5050/notone0010
 BASE_IMAGE = centos:centos8
 
 EXTRA_ARGS ?= --no-cache

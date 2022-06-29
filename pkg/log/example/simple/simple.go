@@ -4,7 +4,7 @@
 
 package main
 
-import "github.com/notone/pigpig/pkg/log"
+import "github.com/notone0010/pigpig/pkg/log"
 
 func main() {
 	log.Infof("this is a test log, message: %s", "good")

@@ -41,7 +41,7 @@ ifeq (${BINS},)
   $(error Could not determine BINS, set ROOT_DIR or run in source dir)
 endif
 
-EXCLUDE_TESTS=github.com/notone/pigpig/test github.com/notone/pigpig/pkg/log github.com/notone/pigpig/third_party github.com/notone/pigpig/internal/pkg/logger
+EXCLUDE_TESTS=github.com/notone0010/pigpig/test github.com/notone0010/pigpig/pkg/log github.com/notone0010/pigpig/third_party github.com/notone0010/pigpig/internal/pkg/logger
 
 .PHONY: go.build.verify
 go.build.verify:

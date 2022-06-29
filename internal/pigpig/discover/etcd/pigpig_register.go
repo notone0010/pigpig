@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 type register struct {
