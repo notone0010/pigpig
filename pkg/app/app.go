@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 var (

@@ -5,7 +5,7 @@
 package v1
 
 import (
-	"github.com/notone/pigpig/internal/pigpig/transport"
+	"github.com/notone0010/pigpig/internal/pigpig/transport"
 )
 
 // Service defines functions used to return resource interface.

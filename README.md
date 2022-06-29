@@ -33,8 +33,8 @@ docker pull notone0011/pigpig-arm64
 # 快速开始
 
 ```bash
-$ git clone https://github.com/notone0010/pigpig.git $GOPATH/src/github.com/notone/pigpig
-$ cd $GOPATH/src/github.com/notone/pigpig
+$ git clone https://github.com/notone0010/pigpig.git $GOPATH/src/github.com/notone0010/pigpig
+$ cd $GOPATH/src/github.com/notone0010/pigpig
 $ docker-compose up -d
 ```
 命令执行完成后，可以访问 `http://localhost:8080/version` 查看当前服务版本信息
@@ -44,13 +44,13 @@ $ docker-compose up -d
 ## 构建
 1. git clone 
 ```bash
-$ git clone https://github.com/notone0010/pigpig.git $GOPATH/src/github.com/notone/pigpig
+$ git clone https://github.com/notone0010/pigpig.git $GOPATH/src/github.com/notone0010/pigpig
 ```
 
 2. 编译
 
 ```bash
-$ cd $GOPATH/src/github.com/notone/pigpig
+$ cd $GOPATH/src/github.com/notone0010/pigpig
 $ make
 ```
 
@@ -64,6 +64,7 @@ $ make
 ![a-benchmark](./docs/images/pigpig.png)
 
 ## TODO:
+- [ ] plugins系统
 - [x] PigPig 服务
 - [ ] IP资源调度组件
 - [ ] IP代理池

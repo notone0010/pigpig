@@ -3,4 +3,4 @@
 // license that can be found in the LICENSE file.
 
 // Package db provide useful functions to create mysql instance.
-package db // import "github.com/notone/pigpig/pkg/db"
+package db // import "github.com/notone0010/pigpig/pkg/db"

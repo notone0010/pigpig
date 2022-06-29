@@ -20,9 +20,9 @@ import (
 	"github.com/andybalholm/brotli"
 	"github.com/klauspost/compress/gzip"
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/internal/pigpig/transport"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pigpig/transport"
+	"github.com/notone0010/pigpig/pkg/log"
 	"github.com/parnurzeal/gorequest"
 )
 

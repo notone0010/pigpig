@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/pkg/log"
+	v1 "github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // Recovery when the server is processing panic occurred will avoid process abort.

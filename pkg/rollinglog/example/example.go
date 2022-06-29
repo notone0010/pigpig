@@ -4,7 +4,7 @@
 
 package main
 
-import "github.com/notone/pigpig/pkg/rollinglog"
+import "github.com/notone0010/pigpig/pkg/rollinglog"
 
 func main() {
 	opts := &rollinglog.Options{

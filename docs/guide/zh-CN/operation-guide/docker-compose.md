@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
 
   pigpig-master:
-    image: 127.0.0.1:5050/notone/pigpig-arm64:v1.0.0-5-g080201b  # pigpig镜像地址
+    image: notone0011/pigpig-arm64  # pigpig镜像地址
     container_name: pigpig-master
     # 启动命令 是否开启集群，集群名称等
     command: -c /etc/pigpig/pigpig.yaml --server.cluster.enable=true --server.cluster.name=my_cluster --server.cluster.role=master -m=true --log.level=info
@@ -69,7 +69,7 @@ services:
       - pigpig-redis
 
   pigpig-slave1:
-    image: 127.0.0.1:5050/notone/pigpig-arm64:v1.0.0-5-g080201b
+    image: notone0011/pigpig-arm64
     container_name: pigpig-slave1
     command: -c /etc/pigpig/pigpig.yaml --server.cluster.enable=true --server.cluster.name=my_cluster --server.cluster.role=slave --log.level=info
     ports:

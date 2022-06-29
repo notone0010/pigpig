@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"go.uber.org/zap"
 
-	logruslogger "github.com/notone/pigpig/pkg/rollinglog/logrus"
+	logruslogger "github.com/notone0010/pigpig/pkg/rollinglog/logrus"
 )
 
 type Logger struct {

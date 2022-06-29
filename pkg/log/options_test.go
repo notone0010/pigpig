@@ -24,7 +24,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 func Test_Options_Validate(t *testing.T) {

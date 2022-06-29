@@ -5,10 +5,10 @@
 package pigpig
 
 import (
-	"github.com/notone/pigpig/internal/pigpig/config"
-	"github.com/notone/pigpig/internal/pigpig/options"
-	"github.com/notone/pigpig/pkg/app"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/config"
+	"github.com/notone0010/pigpig/internal/pigpig/options"
+	"github.com/notone0010/pigpig/pkg/app"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 const commandDesc = `The PigPig is a distributed proxy server and it

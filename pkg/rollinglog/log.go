@@ -10,7 +10,7 @@ import (
 	"log"
 	"sync"
 
-	"github.com/notone/pigpig/pkg/rollinglog/klog"
+	"github.com/notone0010/pigpig/pkg/rollinglog/klog"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

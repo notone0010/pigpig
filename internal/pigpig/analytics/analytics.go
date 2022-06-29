@@ -12,8 +12,8 @@ import (
 
 	msgpack "gopkg.in/vmihailenco/msgpack.v2"
 
-	"github.com/notone/pigpig/pkg/log"
-	"github.com/notone/pigpig/pkg/storage"
+	"github.com/notone0010/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/storage"
 )
 
 const analyticsKeyName = "iam-system-analytics"

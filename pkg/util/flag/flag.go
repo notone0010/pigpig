@@ -11,7 +11,7 @@ import (
 
 	"github.com/spf13/pflag"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // WordSepNormalizeFunc changes all flags that contain "_" separators.

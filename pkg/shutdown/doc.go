@@ -2,4 +2,4 @@
 // // Use of this source code is governed by a MIT style
 // // license that can be found in the LICENSE file.
 
-package shutdown // import "github.com/notone/pigpig/pkg/shutdown"
+package shutdown // import "github.com/notone0010/pigpig/pkg/shutdown"

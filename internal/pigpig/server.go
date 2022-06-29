@@ -10,17 +10,17 @@ import (
 	"time"
 
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pigpig/config"
-	"github.com/notone/pigpig/internal/pigpig/discover"
-	"github.com/notone/pigpig/internal/pigpig/discover/etcd"
+	"github.com/notone0010/pigpig/internal/pigpig/config"
+	"github.com/notone0010/pigpig/internal/pigpig/discover"
+	"github.com/notone0010/pigpig/internal/pigpig/discover/etcd"
 
-	// "github.com/notone/pigpig/internal/pigpig/transport".
-	genericoptions "github.com/notone/pigpig/internal/pkg/options"
-	genericproxyserver "github.com/notone/pigpig/internal/pkg/server"
-	"github.com/notone/pigpig/pkg/log"
-	"github.com/notone/pigpig/pkg/shutdown"
-	"github.com/notone/pigpig/pkg/shutdown/shutdownmanagers/posixsignal"
-	"github.com/notone/pigpig/pkg/storage"
+	// "github.com/notone0010/pigpig/internal/pigpig/transport".
+	genericoptions "github.com/notone0010/pigpig/internal/pkg/options"
+	genericproxyserver "github.com/notone0010/pigpig/internal/pkg/server"
+	"github.com/notone0010/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/shutdown"
+	"github.com/notone0010/pigpig/pkg/shutdown/shutdownmanagers/posixsignal"
+	"github.com/notone0010/pigpig/pkg/storage"
 )
 
 type proxyServer struct {

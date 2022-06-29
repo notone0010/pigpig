@@ -3,4 +3,4 @@
 // license that can be found in the LICENSE file.
 
 // Package app defines an application framework used to create application.
-package app // import "github.com/notone/pigpig/pkg/app"
+package app // import "github.com/notone0010/pigpig/pkg/app"

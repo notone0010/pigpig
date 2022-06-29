@@ -4,7 +4,7 @@
 
 package config
 
-import "github.com/notone/pigpig/internal/pigpig/options"
+import "github.com/notone0010/pigpig/internal/pigpig/options"
 
 // Config is the running configuration structure of the IAM pump service.
 type Config struct {

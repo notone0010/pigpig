@@ -16,7 +16,7 @@ import (
 
 	gormlogger "gorm.io/gorm/logger"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // Define colors.

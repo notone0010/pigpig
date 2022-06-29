@@ -5,7 +5,7 @@
 package plugin
 
 import (
-	"github.com/notone/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
 )
 
 // ProxyPlugin struct.

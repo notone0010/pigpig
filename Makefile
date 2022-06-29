@@ -11,7 +11,7 @@ all: tidy gen add-copyright lint build
 # ==============================================================================
 # Build options
 
-ROOT_PACKAGE=github.com/notone/pigpig
+ROOT_PACKAGE=github.com/notone0010/pigpig
 VERSION_PACKAGE=github.com/marmotedu/component-base/pkg/version
 
 # ==============================================================================

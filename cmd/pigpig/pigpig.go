@@ -10,7 +10,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/notone/pigpig/internal/pigpig"
+	"github.com/notone0010/pigpig/internal/pigpig"
 )
 
 func main() {

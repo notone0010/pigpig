@@ -5,9 +5,9 @@
 package middleware
 
 import (
-	v1 "github.com/notone/pigpig/internal/pigpig/dudu"
+	v1 "github.com/notone0010/pigpig/internal/pigpig/dudu"
 
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // UsernameKey defines the key in gin context which represents the owner of the secret.

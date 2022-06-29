@@ -12,8 +12,8 @@ package middleware
 // 	"github.com/marmotedu/component-base/pkg/core"
 // 	// metav1 "github.com/marmotedu/component-base/pkg/meta/dudu"
 // 	"github.com/marmotedu/errors"
-// 	// "github.com/notone/pigpig/internal/pigpig/transport"
-// 	"github.com/notone/pigpig/internal/pkg/code"
+// 	// "github.com/notone0010/pigpig/internal/pigpig/transport"
+// 	"github.com/notone0010/pigpig/internal/pkg/code"
 // )
 //
 // // Validation make sure users have the right resource permission and operation.

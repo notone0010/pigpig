@@ -6,10 +6,10 @@ package proxy
 
 import (
 	"github.com/marmotedu/errors"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/internal/pkg/code"
-	"github.com/notone/pigpig/pkg/core"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pkg/code"
+	"github.com/notone0010/pigpig/pkg/core"
+	"github.com/notone0010/pigpig/pkg/log"
 )
 
 // UserRequestHandler deal with any http requests.

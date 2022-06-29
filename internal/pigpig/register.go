@@ -5,10 +5,10 @@
 package pigpig
 
 import (
-	"github.com/notone/pigpig/internal/pigpig/controller/v1/proxy"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/internal/pigpig/transport/xgorequest"
-	"github.com/notone/pigpig/internal/pkg/loadbalance/lb"
+	"github.com/notone0010/pigpig/internal/pigpig/controller/v1/proxy"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/internal/pigpig/transport/xgorequest"
+	"github.com/notone0010/pigpig/internal/pkg/loadbalance/lb"
 )
 
 func registerProxyHandler(m *dudu.ProxyHttpMux) {

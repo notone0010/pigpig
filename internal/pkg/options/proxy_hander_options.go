@@ -5,7 +5,7 @@
 package options
 
 import (
-	"github.com/notone/pigpig/internal/pkg/server"
+	"github.com/notone0010/pigpig/internal/pkg/server"
 )
 
 // ProxyHandlerOptions proxy handler options.

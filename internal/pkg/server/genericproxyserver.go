@@ -15,15 +15,15 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/notone/pigpig/internal/pigpig/discover"
-	"github.com/notone/pigpig/internal/pigpig/dudu"
-	"github.com/notone/pigpig/pkg/core"
-	"github.com/notone/pigpig/pkg/storage"
-	"github.com/notone/pigpig/pkg/util/infoutil"
+	"github.com/notone0010/pigpig/internal/pigpig/discover"
+	"github.com/notone0010/pigpig/internal/pigpig/dudu"
+	"github.com/notone0010/pigpig/pkg/core"
+	"github.com/notone0010/pigpig/pkg/storage"
+	"github.com/notone0010/pigpig/pkg/util/infoutil"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/notone/pigpig/internal/pkg/middleware"
-	"github.com/notone/pigpig/pkg/log"
+	"github.com/notone0010/pigpig/internal/pkg/middleware"
+	"github.com/notone0010/pigpig/pkg/log"
 
 	"github.com/marmotedu/component-base/pkg/version"
 )

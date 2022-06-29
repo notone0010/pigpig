@@ -4,4 +4,4 @@
 
 // Package genericclioptions contains flags which can be added to you command, bound, completed, and produce
 // useful helper functions.
-package genericclioptions // import "github.com/notone/pigpig/pkg/cli/genericclioptions"
+package genericclioptions // import "github.com/notone0010/pigpig/pkg/cli/genericclioptions"
