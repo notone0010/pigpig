@@ -75,8 +75,21 @@ log:
 ```
 
 ### 命令行启动示例
+集群模式master节点启动命令
 ```bash
 $ pigpig -c configs/pigpig.yaml --server.cluster.enable=true --server.cluster.name=my_cluster \
  --server.cluster.role=master \
- --log.level=info --redis.host=host:port
+ --log.level=info --redis.host=localhost --redis.port=6379
+```
+集群模式salve节点启动命令
+```bash
+$ pigpig -c configs/pigpig.yaml --server.cluster.enable=true --server.cluster.name=my_cluster \
+ --server.cluster.role=salve \
+ --log.level=info --redis.host=localhost --redis.port=6379
+```
+
+单机模式启动命令
+```bash
+$ pigpig -c configs/pigpig.yaml --server.cluster.enable=false \
+ --log.level=info --redis.host=localhost --redis.port=6379
 ```
