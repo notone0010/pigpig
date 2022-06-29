@@ -66,7 +66,7 @@ EOF
       "C": "CN",
       "ST": "ChongQing",
       "L": "ChongQing",
-      "O": "notone0010",
+      "O": "notone",
       "OU": "pigpig"
     }
   ],
@@ -86,7 +86,7 @@ EOF
   fi
 
   echo "Generate "${prefix}" certificates..."
-  echo '{"CN":"'"${prefix}"'","hosts":[],"key":{"algo":"rsa","size":2048},"names":[{"C":"CN","ST":"ChongQing","L":"ChongQing","O":"notone0010","OU":"'"${prefix}"'"}]}' \
+  echo '{"CN":"'"${prefix}"'","hosts":[],"key":{"algo":"rsa","size":2048},"names":[{"C":"CN","ST":"ChongQing","L":"ChongQing","O":"notone","OU":"'"${prefix}"'"}]}' \
     | ${CFSSL_BIN} gencert -hostname="${CERT_HOSTNAME},${prefix}" -ca=ca.pem -ca-key=ca-key.pem \
     -config=ca-config.json -profile=pigpig - | ${CFSSLJSON_BIN} -bare "${prefix}"
 
