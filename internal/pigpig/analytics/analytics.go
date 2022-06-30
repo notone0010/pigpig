@@ -16,7 +16,7 @@ import (
 	"github.com/notone0010/pigpig/pkg/storage"
 )
 
-const analyticsKeyName = "iam-system-analytics"
+const analyticsKeyName = "pigpig-system-analytics"
 
 const (
 	recordsBufferForcedFlushInterval = 1 * time.Second

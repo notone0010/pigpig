@@ -64,7 +64,7 @@ $ make gen.ca
 ```
 **浏览器若使用**please trust this CA
 
-[附录：如何信任CA证书]()
+[信任CA证书(不想写了~歇一歇! 可以不用click, 将会跳转到主页 after your click)](https://github.com/notone0010/pigpig)
 
 并在配置文件或者命令行指定证书地址
 

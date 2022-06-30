@@ -4,8 +4,6 @@
 
 package transport
 
-//go:generate mockgen -self_package=github.com/marmotedu/iam/internal/apiserver/store -destination mock_store.go -package store github.com/marmotedu/iam/internal/apiserver/store Factory,UserStore,SecretStore,PolicyStore
-
 var client Factory
 
 // Factory defines the iam platform storage interface.
