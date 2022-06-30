@@ -74,7 +74,7 @@ $ make gen.ca
 ![a-benchmark](./docs/images/pigpig.png)
 
 ## TODO:
-- [ ] plugins系统
+- [x] plugins系统
 - [x] PigPig 服务
 - [ ] IP资源调度组件
 - [ ] IP代理池

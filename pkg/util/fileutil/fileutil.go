@@ -261,3 +261,30 @@ func MatchEntries(dir, pattern string) ([]string, error) {
 	}
 	return res, err
 }
+
+// GetProjectDirPath returns current project dir path
+func GetProjectDirPath() string {
+
+	// pwd, _ := filepath.Abs(filepath.Dir(os.Args[0]))
+	pwd, _ := os.Getwd()
+	return pwd
+}
+
+// ListFile will return the contents of a given file path as a string slice.
+func ListFile(path string) []string {
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		path = filepath.Dir(path)
+		files, _ = ioutil.ReadDir(path)
+	}
+
+	// nolint: prealloc
+	var dirPaths []string
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+		dirPaths = append(dirPaths, filepath.Join(path, file.Name()))
+	}
+	return dirPaths
+}

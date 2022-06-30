@@ -37,6 +37,7 @@ type Config struct {
 	EnableProfiling bool
 	EnableMetrics   bool
 
+	Plugins []string
 	Cluster dudu.Cluster
 }
 
@@ -98,6 +99,7 @@ func NewConfig() *Config {
 	return &Config{
 		Healthz:         true,
 		Middlewares:     []string{},
+		Plugins:         []string{},
 		EnableProfiling: true,
 		EnableMetrics:   true,
 	}
@@ -134,6 +136,7 @@ func (c CompletedConfig) New() (*GenericProxyServer, error) {
 		enableMetrics:       c.EnableMetrics,
 		enableProfiling:     c.EnableProfiling,
 		middlewares:         c.Middlewares,
+		plugins:             c.Plugins,
 		Engine:              engine,
 		LocalNetIFAddr:      localIfAddr,
 		Cluster:             c.Cluster,

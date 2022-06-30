@@ -13,7 +13,7 @@ import (
 
 const commandDesc = `The PigPig is a distributed proxy server and it
 send your request to what you require remote server, the PigPig support service
-automatic register and discover, internal load balance, and plugins
+automatic register and discover, internal load balance, and plugin.md
 handles the request traffic.
 
 Find more pigpig information at:

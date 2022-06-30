@@ -6,7 +6,7 @@ style: github
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
-  repository_url: https://github.com/AIpha00/pigpig
+  repository_url: https://github.com/notone0010/pigpig
 options:
   commits:
     # filters:
