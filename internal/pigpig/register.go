@@ -23,8 +23,8 @@ func installController(m *dudu.ProxyHttpMux) {
 	// m.ProxyRequestHandler()
 	// an transport will has initialized
 	requestTransport := xgorequest.GetGorequestTransport()
-	lb := lb.NewLB()
-	proxyHandler := proxy.NewUserController(m, requestTransport, lb)
+	newLB := lb.NewLB()
+	proxyHandler := proxy.NewUserController(m, requestTransport, newLB)
 
 	proxyHandler.Plugins = m.GetHandlers()
 

@@ -223,12 +223,11 @@ func (s *GenericProxyServer) Run() error {
 		}
 	}
 
-	// it will general machine id
-	if err := s.GetMachineId(); err != nil {
-		log.Fatal(err.Error())
-	}
-
 	if s.Cluster.Enable {
+		// it will general machine id
+		if err := s.GetMachineId(); err != nil {
+			log.Fatal(err.Error())
+		}
 		s.setupCluster()
 	}
 

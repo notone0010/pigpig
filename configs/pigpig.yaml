@@ -32,9 +32,9 @@ secure:
   tls:
     #cert-dir: .iam/cert # TLS 证书所在的目录，默认值为 /var/run/iam
     #pair-name: iam # TLS 私钥对名称，默认 iam
-    cert-key:
-      cert-file: "./configs/cert/pigpig.pem" # 包含 x509 证书的文件路径，用 HTTPS 认证
-      private-key-file: "./configs/cert/pigpig-key.pem" # TLS 私钥
+#    cert-key:
+#      cert-file: "./configs/cert/pigpig.pem" # 包含 x509 证书的文件路径，用 HTTPS 认证
+#      private-key-file: "./configs/cert/pigpig-key.pem" # TLS 私钥
 
 # Redis 配置
 redis:

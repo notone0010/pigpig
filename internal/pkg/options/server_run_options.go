@@ -87,6 +87,6 @@ func (s *ServerRunOptions) AddFlags(fs *pflag.FlagSet) {
 		"Expression the server whether the work works when the server role is master")
 	fs.StringVar(&s.Cluster.LoadPolicy, "server.cluster.policy", s.Cluster.LoadPolicy, ""+
 		"The server use what load-balance algorithm when the server is master. If this options is empty default algorithm will be use round-robin")
-	fs.StringSliceVar(&s.Plugins, "server.plugin.md", s.Plugins, ""+
+	fs.StringSliceVar(&s.Plugins, "server.plugins", s.Plugins, ""+
 		"List of allowed plugin.md for server, comma separated.")
 }
