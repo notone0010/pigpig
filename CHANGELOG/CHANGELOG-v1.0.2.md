@@ -1,6 +1,12 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### Chore
+- **.gitlint:** set subject-maxlen to 128
+
+### Docs
+- **README.md:** update README.md
+
 
 <a name="v1.0.2"></a>
 ## [v1.0.2] - 2022-06-30
