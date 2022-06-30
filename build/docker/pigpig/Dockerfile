@@ -13,6 +13,10 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
       mkdir -p /etc/cert
 
 COPY pigpig /usr/local/bin/
+# add dafault configuration
+COPY pigpig.yaml /opt/pigpig/configs/
+
+COPY cert/* /var/run/pigpig/
 
 ENTRYPOINT ["pigpig"]
-CMD ["-c", "/etc/pigpig/pigpig.yaml"]
+#CMD ["-c", "/etc/pigpig/pigpig.yaml"]
