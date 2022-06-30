@@ -5,7 +5,6 @@
 # Build all by default, even if it's not first
 .DEFAULT_GOAL := all
 
-
 .PHONY: all
 all: tidy gen add-copyright lint build
 
