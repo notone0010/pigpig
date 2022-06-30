@@ -55,8 +55,8 @@ func NewSecureServingOptions() *SecureServingOptions {
 		BindPort:    8443,
 		Required:    true,
 		ServerCert: GeneratableKeyCert{
-			PairName:      "iam",
-			CertDirectory: "/var/run/iam",
+			PairName:      "pigpig",
+			CertDirectory: "/var/run/pigpig",
 		},
 	}
 }

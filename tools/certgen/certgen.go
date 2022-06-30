@@ -145,8 +145,8 @@ func main() {
 		Locality:   []string{"ChengDu"},
 		Province:   []string{"SiChuan"},
 		CommonName: "PigPig",
-		CrtName:    "./configs/cert/pigpig.pem",
-		KeyName:    "./configs/cert/pigpig-key.pem",
+		CrtName:    "./configs/cert/pigpig.crt",
+		KeyName:    "./configs/cert/pigpig.key",
 	}
 
 	err := CreateCRT(nil, nil, baseinfo)

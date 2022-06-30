@@ -31,8 +31,8 @@ secure:
     #cert-dir: .iam/cert # TLS 证书所在的目录，默认值为 /var/run/iam
     #pair-name: iam # TLS 私钥对名称，默认 iam
     cert-key:
-      cert-file: "/etc/cert/PigPig.crt" # 包含 x509 证书的文件路径，用 HTTPS 认证
-      private-key-file: "/etc/cert/PigPig.key" # TLS 私钥
+      cert-file: "/etc/cert/pigpig.pem" # 包含 x509 证书的文件路径，用 HTTPS 认证
+      private-key-file: "/etc/cert/pigpig-key.pem" # TLS 私钥
 
 # Redis 配置
 redis:
@@ -59,13 +59,6 @@ etcd:
   health_beat_path_prefix: /pigpig_health_beat
   namespace: /pigpig
   UseTLS: false
-
-# JWT 配置
-jwt:
-  realm: JWT # jwt 标识
-  key: dfVpOK8LZeJLZHYmHdb1VdyRrACKpqoo # 服务端密钥
-  timeout: 24h # token 过期时间(小时)
-  max-refresh: 24h # token 更新时间(小时)
 
 log:
   name: pigpig # Logger的名字

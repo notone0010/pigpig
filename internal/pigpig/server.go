@@ -100,7 +100,9 @@ func createProxyServer(cfg *config.Config) (*proxyServer, error) {
 func (s *proxyServer) PrepareRun() preparedProxyServer {
 	registerProxyHandler(s.genericProxyServer.Engine)
 
-	s.initRedisStore()
+	if s.genericProxyServer.Cluster.Enable {
+		s.initRedisStore()
+	}
 
 	s.gs.AddShutdownCallback(shutdown.ShutdownFunc(func(string) error {
 		// graceful shutdown any processing server

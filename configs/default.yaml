@@ -14,7 +14,7 @@ server:
     name: "pigpig-cluster" # 集群名称
     role: "salve"  # 服务器的集群角色
     is_master_handle: true # master 节点是否处理请求, 流量较大时可关闭此选项
-  plugins: test/example.so, # 加载的 插件地址列表，多个插件，逗号(,)隔开
+#  plugins: test/example.so, # 加载的 插件地址列表，多个插件，逗号(,)隔开
 
 
 # HTTP 配置
@@ -30,15 +30,15 @@ secure:
   bind-port: 8443
   # 使用 HTTPS 安全模式的端口号，设置为 0 表示不启用 HTTPS，默认为 8443
   tls:
-    #cert-dir: .iam/cert # TLS 证书所在的目录，默认值为 /var/run/iam
-    #pair-name: iam # TLS 私钥对名称，默认 iam
+    #cert-dir: /var/run/pigpig # TLS 证书所在的目录，默认值为 /var/run/pigpig
+    #pair-name: pigpig # TLS 私钥对名称，默认 pigpig
 #    cert-key:
-#      cert-file: "./configs/cert/pigpig.pem" # 包含 x509 证书的文件路径，用 HTTPS 认证
-#      private-key-file: "./configs/cert/pigpig-key.pem" # TLS 私钥
+#      cert-file: "/etc/cert/pigpig.pem" # 包含 x509 证书的文件路径，用 HTTPS 认证
+#      private-key-file: "/etc/cert/pigpig-key.pem" # TLS 私钥
 
 # Redis 配置
 redis:
-  host: "127.0.0.1" # redis 地址，默认 127.0.0.1:6379
+  host: "redis" # redis 地址，默认 127.0.0.1:6379
   port: 6379 # redis 端口，默认 6379
   password: "" # redis 密码
   #addrs:
