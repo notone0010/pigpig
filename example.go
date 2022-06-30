@@ -11,21 +11,23 @@ import (
 	"github.com/notone0010/pigpig/internal/pkg/plugins"
 )
 
-type Example struct {
-}
+type example struct{}
 
+// NewPlugin for plugins example.
 func NewPlugin() plugins.PigPigPlugins {
-	return &Example{}
+	return &example{}
 }
 
-func (e Example) ModifyRequest(r *dudu.RequestDetail) {
+// ModifyRequest for plugins example.
+func (e example) ModifyRequest(r *dudu.RequestDetail) {
 	log.Printf("modify request")
 }
 
-func (e Example) ModifyResponse(r *dudu.RequestDetail, resp *dudu.ResponseDetail) {
+// ModifyResponse for plugins example.
+func (e example) ModifyResponse(r *dudu.RequestDetail, resp *dudu.ResponseDetail) {
 	log.Println("modify response")
-
 }
 
-func (e Example) ModifyError(c *dudu.RequestDetail, errors []error) {
+// ModifyError ...
+func (e example) ModifyError(c *dudu.RequestDetail, errors []error) {
 }

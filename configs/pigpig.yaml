@@ -14,6 +14,7 @@ server:
     name: "pigpig-cluster" # 集群名称
     role: "salve"  # 服务器的集群角色
     is_master_handle: true # master 节点是否处理请求, 流量较大时可关闭此选项
+  plugins: test/example.so, # 加载的 插件地址列表，多个插件，逗号(,)隔开
 
 
 # HTTP 配置
