@@ -141,8 +141,10 @@ func (s *GenericProxyServer) InstallMiddlewares() {
 // preparedGenericProxyServer is a private wrapper that enforces a call of PrepareRun() before Run can be invoked.
 type preparedGenericProxyServer struct {
 	*GenericProxyServer
-}
+}.
 */
+
+// InstallPlugins install plugin.md.
 func (s *GenericProxyServer) InstallPlugins() {
 	po := plugins.NewPluginsOptions(s.plugins)
 	po.LoadPlugins()

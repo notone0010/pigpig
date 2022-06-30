@@ -16,7 +16,7 @@ type ServerRunOptions struct {
 	Mode        string   `json:"mode"        mapstructure:"mode"`
 	Healthz     bool     `json:"healthz"     mapstructure:"healthz"`
 	Middlewares []string `json:"middlewares" mapstructure:"middlewares"`
-	Plugins     []string `json:"plugins" mapstructure:"plugins"`
+	Plugins     []string `json:"plugin.md"  mapstructure:"plugin.md"`
 
 	Cluster ClusterOptions `json:"cluster" mapstructure:"cluster"`
 }
@@ -54,6 +54,7 @@ func (s *ServerRunOptions) ApplyTo(c *server.Config) error {
 		LoadPolicy:     s.Cluster.LoadPolicy,
 		Name:           s.Cluster.Name,
 	}
+	c.Plugins = s.Plugins
 
 	return nil
 }
@@ -86,4 +87,6 @@ func (s *ServerRunOptions) AddFlags(fs *pflag.FlagSet) {
 		"Expression the server whether the work works when the server role is master")
 	fs.StringVar(&s.Cluster.LoadPolicy, "server.cluster.policy", s.Cluster.LoadPolicy, ""+
 		"The server use what load-balance algorithm when the server is master. If this options is empty default algorithm will be use round-robin")
+	fs.StringSliceVar(&s.Plugins, "server.plugin.md", s.Plugins, ""+
+		"List of allowed plugin.md for server, comma separated.")
 }

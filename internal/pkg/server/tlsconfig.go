@@ -67,9 +67,6 @@ func GetCertificate(clientHello *tls.ClientHelloInfo) (*tls.Certificate, error) 
 	keyName := certRegexp.ReplaceAllString(keyStr[len(keyStr)-1], hostName)
 	privateKeyPath := strings.Join(certStr[:len(certStr)-1], "/") + "/" + keyName
 
-	// certPath := strings.Replace(rootCA.CertFile, "PigPig", hostName, 1)
-	// privateKeyPath := strings.Replace(rootCA.KeyFile, "PigPig", hostName, 1)
-
 	loadCert, err := LoadCertificate(clientHello.ServerName, certPath, privateKeyPath)
 	if err == nil && loadCert != nil {
 		certsCache.CacheMap[hostName] = loadCert
@@ -132,6 +129,7 @@ func GenerateCertsForHostname(host string, rootCA *tls.Certificate, certPath, pr
 		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 		BasicConstraintsValid: true,
 		IsCA:                  false,
+		DNSNames:              []string{host},
 	}
 
 	// 生成指定位数密匙

@@ -13,37 +13,46 @@ import (
 	"github.com/notone0010/pigpig/pkg/util/fileutil"
 )
 
-var defaultPluginsDir = fileutil.GetProjectDirPath() + "/plugins"
+var defaultPluginsDir = fileutil.GetProjectDirPath() + "/plugin.md"
 
-// PigPigPlugins plugin of the PigPig server interface
+// PigPigPlugins plugin of the PigPig server interface.
 type PigPigPlugins interface {
-	// ModifyRequest can to modify request before send
+
+	// ModifyRequest is an optional function that modifies the
+	// request before send to the remote.
 	ModifyRequest(c *dudu.RequestDetail)
 
-	// ModifyResponse can to modify the response before send to client
+	// ModifyResponse is an optional function that modifies the
+	// Response from the remote. It is called if the remote
+	// returns a response at all, with any HTTP status code.
+	// If the backend is unreachable, the optional ErrorHandler is
+	// called without any call to ModifyResponse.
 	ModifyResponse(c *dudu.RequestDetail, r *dudu.ResponseDetail)
 
-	// ModifyError can to modify the errors if an error occurred
+	// ModifyError is an optional function if the remote is unreachable then call modify error
 	ModifyError(c *dudu.RequestDetail, errors []error)
 }
 
+// PluginsOptions ...
 type PluginsOptions struct {
 	path []string
 
 	Plugins dudu.HandlersChain
 }
 
+// NewPluginsOptions returns new plugin.md options.
 func NewPluginsOptions(path []string) *PluginsOptions {
 	return &PluginsOptions{path: path}
 }
 
 type pluginFunc func() PigPigPlugins
 
+// LoadPlugins load plugin.md.
 func (o *PluginsOptions) LoadPlugins() {
-	log.Infof("attempt to load default plugins")
+	log.Infof("attempt to load default plugin.md")
 	defaultList := fileutil.ListFile(defaultPluginsDir)
 	o.loadPlugins(defaultList)
-	log.Infof("loaded default plugins")
+	log.Infof("loaded default plugin.md")
 
 	if len(o.path) > 0 {
 		log.Infof("begin load appoint plugin size -> %d", len(o.path))
@@ -57,7 +66,6 @@ func (o *PluginsOptions) loadPlugins(f []string) {
 			p, err := plugin.Open(pluginFile)
 			if err != nil {
 				log.Warnf("attempt to load %s but encounter an error %s so that skip it", pluginFile, err.Error())
-
 			} else {
 				o.pluginComplete(pluginFile, p)
 			}
@@ -76,6 +84,7 @@ func (o *PluginsOptions) pluginComplete(pluginFile string, p *plugin.Plugin) {
 	log.Infof("loaded plugin -> %s success", pluginFile)
 }
 
+// GetDuDuHandlerFunc compose to dudu.HandlerFUnc.
 func GetDuDuHandlerFunc(p PigPigPlugins) dudu.HandlerFunc {
 	return func(c *dudu.Context) {
 		p.ModifyRequest(c.RequestDetail)
